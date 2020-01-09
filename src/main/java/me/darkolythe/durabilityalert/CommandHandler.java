@@ -19,6 +19,7 @@ public class CommandHandler implements CommandExecutor {
                     if (args.length == 0) {
                         player.sendMessage(main.prefix + ChatColor.RED + "Invalid Arguments: /durabilityalert toggle/armour/tools");
                     } else if (args.length == 1) {
+                        System.out.println(args);
                         if (args[0].equalsIgnoreCase("toggle")) {
                             main.setPlayerToggle(player);
                             if (main.getPlayerData(player).get(0) == 0) {
@@ -32,10 +33,10 @@ public class CommandHandler implements CommandExecutor {
                     } else if (args.length == 2) {
                         try {
                             int percent = Integer.parseInt(args[1]);
-                            if (args[1].equalsIgnoreCase("armour")) {
+                            if (args[0].equalsIgnoreCase("armour")) {
                                 main.setPlayerArmour(player, percent);
                                 player.sendMessage(main.prefix + ChatColor.GREEN + "Armour durability warning percent set to " + percent);
-                            } else if (args[1].equalsIgnoreCase("tools") || args[1].equalsIgnoreCase("tool")) {
+                            } else if (args[0].equalsIgnoreCase("tools") || args[0].equalsIgnoreCase("tool")) {
                                 main.setPlayerTools(player, percent);
                                 player.sendMessage(main.prefix + ChatColor.GREEN + "Tool durability warning percent set to " + percent);
                             } else {

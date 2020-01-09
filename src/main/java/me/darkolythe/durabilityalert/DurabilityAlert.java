@@ -26,6 +26,7 @@ public final class DurabilityAlert extends JavaPlugin {
         plugin = this;
 
         joinlistener = new JoinListener(plugin);
+        durabilitylistener = new DurabilityListener(plugin);
         joinlistener.setup();
 
         getServer().getPluginManager().registerEvents(durabilitylistener, plugin);
