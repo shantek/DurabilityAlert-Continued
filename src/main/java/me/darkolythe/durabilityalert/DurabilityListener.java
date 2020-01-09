@@ -2,6 +2,7 @@ package me.darkolythe.durabilityalert;
 
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -37,14 +38,21 @@ public class DurabilityListener implements Listener {
         }
 
         if (isDamaged && data.get(0) == 1) {
-            int toolPercent = (int)(((float)(item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage())) / ((float)(item.getType().getMaxDurability())) * 100);
+            float toolPercent = (((float)(item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage())) / ((float)(item.getType().getMaxDurability())) * 100);
             if ((toolPercent) <= percent) {
-                sendWarning(player, WordUtils.capitalize(item.getType().toString().toLowerCase().replace("_", " ")));
+                sendWarning(player, WordUtils.capitalize(item.getType().toString().split("_")[1]), item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage() - 1);
             }
         }
     }
 
-    private void sendWarning(Player player, String item) {
-        player.sendTitle("", ChatColor.RED + "Low durability on " + item, 2, 10, 2);
+    private void sendWarning(Player player, String item, int durability) {
+        String subtitle = "";
+        if (durability <= 10) {
+            subtitle = ChatColor.GRAY.toString() + ChatColor.BOLD.toString() + "Durability left: " + ChatColor.RED + ChatColor.BOLD.toString() + durability;
+            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_SNARE, 1, 1);
+        } else {
+            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 1, 1);
+        }
+        player.sendTitle(ChatColor.RED + "Low durability on " + WordUtils.capitalize(item.toLowerCase()), subtitle, 2, 10, 2);
     }
 }
