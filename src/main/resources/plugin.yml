@@ -1,0 +1,17 @@
+name: DurabilityAlert
+version: ${project.version}
+main: me.darkolythe.durabilityalert.DurabilityAlert
+api-version: 1.13
+
+commands:
+  durabilityalert:
+    usage: /<command>
+    aliases: [da]
+    description: the base durabilityalert command
+    permission: durabilityalert.command
+    permission-message: You do not have permission!
+
+permissions:
+  durabilityalert.command:
+    description: default durability alert command permission
+    default: op
