@@ -36,7 +36,7 @@ public class DurabilityListener implements Listener {
             isDamaged = true;
         }
 
-        if (isDamaged) {
+        if (isDamaged && data.get(0) == 1) {
             int toolPercent = (int)(((float)(item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage())) / ((float)(item.getType().getMaxDurability())) * 100);
             if ((toolPercent) <= percent) {
                 sendWarning(player, WordUtils.capitalize(item.getType().toString().toLowerCase().replace("_", " ")));

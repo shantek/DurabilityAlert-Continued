@@ -81,4 +81,8 @@ public final class DurabilityAlert extends JavaPlugin {
         data.set(2, percent);
         playerData.put(player, data);
     }
+
+    void setPlayerData(Player player, List<Integer> data) {
+        playerData.put(player, data);
+    }
 }

@@ -63,11 +63,11 @@ public class JoinListener implements Listener {
     private void playerLoad(Player player) {
         if (playerDataConfig.contains("player." + player.getUniqueId())) {
             List<Integer> data = playerDataConfig.getIntegerList("player." + player.getUniqueId());
+            main.setPlayerData(player, data);
         }
     }
 
     private void playerSave(Player player) {
-        int index = 0;
         playerData.delete();
         try {
             playerData.createNewFile();
