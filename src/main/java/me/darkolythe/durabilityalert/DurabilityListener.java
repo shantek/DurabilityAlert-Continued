@@ -48,11 +48,11 @@ public class DurabilityListener implements Listener {
     private void sendWarning(Player player, String item, int durability) {
         String subtitle = "";
         if (durability <= 10) {
-            subtitle = ChatColor.GRAY.toString() + ChatColor.BOLD.toString() + "Durability left: " + ChatColor.RED + ChatColor.BOLD.toString() + durability;
+            subtitle = ChatColor.GRAY.toString() + ChatColor.BOLD.toString() + main.confighandler.durabilityleft + ": " + ChatColor.RED + ChatColor.BOLD.toString() + durability;
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_SNARE, 1, 1);
         } else {
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 1, 1);
         }
-        player.sendTitle(ChatColor.RED + "Low durability on " + WordUtils.capitalize(item.toLowerCase()), subtitle, 2, 10, 2);
+        player.sendTitle(ChatColor.RED + main.confighandler.lowdurability + " " + WordUtils.capitalize(item.toLowerCase()), subtitle, 2, 10, 2);
     }
 }

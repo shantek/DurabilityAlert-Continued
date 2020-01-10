@@ -1,0 +1,8 @@
+lowdurability: "Low durability on"
+durabilityleft: "Durability left"
+warningsdisabled: "Durability Warnings Disabled!"
+warningsenabled: "Durability Warnings Enabled!"
+invalidarguments: "Invalid Arguments"
+armourset: "Armour durability warning percent set to"
+toolset: "Tool durability warning percent set to"
+mustbenumber: "Percent must be a number! ex: 10"

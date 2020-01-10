@@ -60,6 +60,12 @@ public class JoinListener implements Listener {
         }
     }
 
+    public void onServerStart() {
+        for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+            playerLoad(p);
+        }
+    }
+
     private void playerLoad(Player player) {
         if (playerDataConfig.contains("player." + player.getUniqueId())) {
             List<Integer> data = playerDataConfig.getIntegerList("player." + player.getUniqueId());
