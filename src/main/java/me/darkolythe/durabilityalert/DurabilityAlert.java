@@ -15,7 +15,7 @@ public final class DurabilityAlert extends JavaPlugin {
 
     private static DurabilityAlert plugin;
 
-    final String prefix = ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "[" + ChatColor.BLUE.toString() + "DeepStorage" + ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "] ";
+    final String prefix = ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "[" + ChatColor.BLUE.toString() + "DurabilityAlert" + ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "] ";
 
     private static Map<Player, List<Integer>> playerData = new HashMap<>();
 
