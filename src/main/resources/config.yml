@@ -6,3 +6,5 @@ invalidarguments: "Invalid Arguments"
 armourset: "Armour durability warning percent set to"
 toolset: "Tool durability warning percent set to"
 mustbenumber: "Percent must be a number! ex: 10"
+
+displaytime: 10

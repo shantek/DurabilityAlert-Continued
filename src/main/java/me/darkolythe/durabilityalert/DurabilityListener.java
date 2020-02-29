@@ -53,6 +53,6 @@ public class DurabilityListener implements Listener {
         } else {
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 1, 1);
         }
-        player.sendTitle(ChatColor.RED + main.confighandler.lowdurability + " " + WordUtils.capitalize(item.toLowerCase()), subtitle, 2, 10, 2);
+        player.sendTitle(ChatColor.RED + main.confighandler.lowdurability + " " + WordUtils.capitalize(item.toLowerCase()), subtitle, 2, DurabilityAlert.displaytime, 2);
     }
 }
