@@ -23,24 +23,26 @@ public class DurabilityListener implements Listener {
     private void onItemDamage(PlayerItemDamageEvent event) {
         ItemStack item = event.getItem();
         Player player = event.getPlayer();
-        String type = item.getType().toString().toLowerCase();
-        List<Integer> data = main.getPlayerData(event.getPlayer());
+        if (player.hasPermission("durabilityalert.alert")) {
+            String type = item.getType().toString().toLowerCase();
+            List<Integer> data = main.getPlayerData(event.getPlayer());
 
-        boolean isDamaged = false;
-        int percent = 0;
+            boolean isDamaged = false;
+            int percent = 0;
 
-        if (type.contains("helmet") || type.contains("chestplate") || type.contains("leggings") || type.contains("boots")) {
-            percent = data.get(1);
-            isDamaged = true;
-        } else if (type.contains("pickaxe") || type.contains("axe") || type.contains("shovel") || type.contains("sword") || type.contains("hoe") || type.contains("fishing") || type.contains("shear")) {
-            percent = data.get(2);
-            isDamaged = true;
-        }
+            if (type.contains("helmet") || type.contains("chestplate") || type.contains("leggings") || type.contains("boots")) {
+                percent = data.get(1);
+                isDamaged = true;
+            } else if (type.contains("pickaxe") || type.contains("axe") || type.contains("shovel") || type.contains("sword") || type.contains("hoe") || type.contains("fishing") || type.contains("shear")) {
+                percent = data.get(2);
+                isDamaged = true;
+            }
 
-        if (isDamaged && data.get(0) == 1) {
-            float toolPercent = (((float)(item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage())) / ((float)(item.getType().getMaxDurability())) * 100);
-            if ((toolPercent) <= percent) {
-                sendWarning(player, WordUtils.capitalize(item.getType().toString().split("_")[1]), item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage() - 1);
+            if (isDamaged && data.get(0) == 1) {
+                float toolPercent = (((float) (item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage())) / ((float) (item.getType().getMaxDurability())) * 100);
+                if ((toolPercent) <= percent) {
+                    sendWarning(player, WordUtils.capitalize(item.getType().toString().split("_")[1]), item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage() - 1);
+                }
             }
         }
     }

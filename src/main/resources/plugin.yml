@@ -15,3 +15,6 @@ permissions:
   durabilityalert.command:
     description: default durability alert command permission
     default: op
+  durabilityalert.alert:
+    description: allows the user to get durability alerts
+    default: op
