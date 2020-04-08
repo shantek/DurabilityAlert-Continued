@@ -73,12 +73,12 @@ public class JoinListener implements Listener {
         }
     }
 
-    private void playerSave(Player player) {
+    void playerSave(Player player) {
         playerData.delete();
         try {
             playerData.createNewFile();
         } catch (IOException e) {
-            System.out.println(main.prefix + ChatColor.RED + "Could not save refineries...");
+            System.out.println(main.prefix + ChatColor.RED + "Could not save data...");
         }
         playerDataConfig = YamlConfiguration.loadConfiguration(playerData);
 

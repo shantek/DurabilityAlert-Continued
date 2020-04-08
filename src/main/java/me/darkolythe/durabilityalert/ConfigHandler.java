@@ -10,6 +10,7 @@ public class ConfigHandler {
     String armourset;
     String toolset;
     String mustbenumber;
+    String settype;
 
     DurabilityAlert main;
     ConfigHandler(DurabilityAlert plugin) {
@@ -23,5 +24,6 @@ public class ConfigHandler {
         armourset = main.getConfig().getString("armourset");
         toolset = main.getConfig().getString("toolset");
         mustbenumber = main.getConfig().getString("mustbenumber");
+        settype = main.getConfig().getString("settype");
     }
 }

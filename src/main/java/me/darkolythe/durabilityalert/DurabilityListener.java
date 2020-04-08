@@ -40,7 +40,8 @@ public class DurabilityListener implements Listener {
 
             if (isDamaged && data.get(0) == 1) {
                 float toolPercent = (((float) (item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage())) / ((float) (item.getType().getMaxDurability())) * 100);
-                if ((toolPercent) <= percent) {
+                int toolLeft = (item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage());
+                if ((toolPercent) <= percent || (data.get(3) == 1 && (toolLeft <= percent))) {
                     sendWarning(player, WordUtils.capitalize(item.getType().toString().split("_")[1]), item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage() - 1);
                 }
             }

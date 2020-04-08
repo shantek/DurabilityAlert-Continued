@@ -64,6 +64,7 @@ public final class DurabilityAlert extends JavaPlugin {
             data.add(1);
             data.add(10);
             data.add(10);
+            data.add(0);
             playerData.put(player, data);
             return playerData.get(player);
         }
@@ -76,6 +77,12 @@ public final class DurabilityAlert extends JavaPlugin {
         } else {
             data.set(0, 0);
         }
+        playerData.put(player, data);
+    }
+
+    void setPlayerType(Player player, int type) {
+        List<Integer> data = getPlayerData(player);
+        data.set(3, type);
         playerData.put(player, data);
     }
 
