@@ -69,6 +69,9 @@ public class JoinListener implements Listener {
     private void playerLoad(Player player) {
         if (playerDataConfig.contains("player." + player.getUniqueId())) {
             List<Integer> data = playerDataConfig.getIntegerList("player." + player.getUniqueId());
+            if (data.size() < 4) {
+                data.add(0);
+            }
             main.setPlayerData(player, data);
         }
     }
