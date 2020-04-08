@@ -33,10 +33,10 @@ public class CommandHandler implements CommandExecutor {
                     } else if (args.length == 2) {
                         try {
                             int percent = Integer.parseInt(args[1]);
-                            if (args[0].equalsIgnoreCase("armour")) {
+                            if (args[0].equalsIgnoreCase("armour") || args[0].equalsIgnoreCase("armor") || args[0].equalsIgnoreCase("a")) {
                                 main.setPlayerArmour(player, percent);
                                 player.sendMessage(main.prefix + ChatColor.GREEN + main.confighandler.armourset + " " + percent);
-                            } else if (args[0].equalsIgnoreCase("tools") || args[0].equalsIgnoreCase("tool")) {
+                            } else if (args[0].equalsIgnoreCase("tools") || args[0].equalsIgnoreCase("tool") || args[0].equalsIgnoreCase("t")) {
                                 main.setPlayerTools(player, percent);
                                 player.sendMessage(main.prefix + ChatColor.GREEN + main.confighandler.toolset + " " + percent);
                             } else {
