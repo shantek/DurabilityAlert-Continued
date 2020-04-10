@@ -19,7 +19,6 @@ public class CommandHandler implements CommandExecutor {
                     if (args.length == 0) {
                         player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert [toggle/armour/tools/type]");
                     } else if (args.length == 1) {
-                        System.out.println(args);
                         if (args[0].equalsIgnoreCase("toggle")) {
                             main.setPlayerToggle(player);
                             if (main.getPlayerData(player).get(0) == 0) {

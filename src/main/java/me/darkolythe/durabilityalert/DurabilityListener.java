@@ -2,6 +2,7 @@ package me.darkolythe.durabilityalert;
 
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,7 +34,7 @@ public class DurabilityListener implements Listener {
             if (type.contains("helmet") || type.contains("chestplate") || type.contains("leggings") || type.contains("boots")) {
                 percent = data.get(1);
                 isDamaged = true;
-            } else if (type.contains("pickaxe") || type.contains("axe") || type.contains("shovel") || type.contains("sword") || type.contains("hoe") || type.contains("fishing") || type.contains("shear")) {
+            } else if (type.contains("pickaxe") || type.contains("axe") || type.contains("shovel") || type.contains("sword") || type.contains("hoe") || type.contains("fishing") || type.contains("shears")) {
                 percent = data.get(2);
                 isDamaged = true;
             }
@@ -42,7 +43,11 @@ public class DurabilityListener implements Listener {
                 float toolPercent = (((float) (item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage())) / ((float) (item.getType().getMaxDurability())) * 100);
                 int toolLeft = (item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage());
                 if ((toolPercent) <= percent || (data.get(3) == 1 && (toolLeft <= percent))) {
-                    sendWarning(player, WordUtils.capitalize(item.getType().toString().split("_")[1]), item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage() - 1);
+                    if (!type.contains("shears")) {
+                        sendWarning(player, WordUtils.capitalize(item.getType().toString().split("_")[1]), item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage() - 1);
+                    } else {
+                        sendWarning(player, WordUtils.capitalize(item.getType().toString()), item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage() - 1);
+                    }
                 }
             }
         }
