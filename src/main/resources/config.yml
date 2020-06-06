@@ -9,3 +9,4 @@ mustbenumber: "Percent must be a number! ex: 10"
 settype: "Warning type has been set to"
 
 displaytime: 10
+defaultvalue: 10

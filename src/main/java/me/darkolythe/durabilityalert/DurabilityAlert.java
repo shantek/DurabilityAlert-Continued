@@ -16,6 +16,7 @@ public final class DurabilityAlert extends JavaPlugin {
 
     final String prefix = ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "[" + ChatColor.BLUE.toString() + "DurabilityAlert" + ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "] ";
     public static int displaytime;
+    public static int defaultvalue;
 
     private static Map<Player, List<Integer>> playerData = new HashMap<>();
 
@@ -43,7 +44,8 @@ public final class DurabilityAlert extends JavaPlugin {
         joinlistener.onServerStart();
 
         displaytime = getConfig().getInt("displaytime");
-        
+        defaultvalue = getConfig().getInt("defaultvalue");
+
         System.out.println(prefix + ChatColor.GREEN + "DurabilityAlert enabled!");
     }
 
@@ -62,8 +64,8 @@ public final class DurabilityAlert extends JavaPlugin {
         } else {
             List<Integer> data = new ArrayList<>();
             data.add(1);
-            data.add(10);
-            data.add(10);
+            data.add(defaultvalue);
+            data.add(defaultvalue);
             data.add(0);
             playerData.put(player, data);
             return playerData.get(player);
