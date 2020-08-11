@@ -42,7 +42,7 @@ public class DurabilityListener implements Listener {
             if (isDamaged && data.get(0) == 1) {
                 float toolPercent = (((float) (item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage())) / ((float) (item.getType().getMaxDurability())) * 100);
                 int toolLeft = (item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage());
-                if ((toolPercent) <= percent || (data.get(3) == 1 && (toolLeft <= percent))) {
+                if ((data.get(3) == 0 && (toolPercent) <= percent) || (data.get(3) == 1 && (toolLeft <= percent))) {
                     if (!type.contains("shears")) {
                         sendWarning(player, WordUtils.capitalize(item.getType().toString().split("_")[1]), item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage() - 1);
                     } else {
@@ -55,7 +55,7 @@ public class DurabilityListener implements Listener {
 
     private void sendWarning(Player player, String item, int durability) {
         String subtitle = "";
-        if (durability <= 10) {
+        if (durability <= 10) { //if the item durability is less than ten, warn the player with remaining durability
             subtitle = ChatColor.GRAY.toString() + ChatColor.BOLD.toString() + main.confighandler.durabilityleft + ": " + ChatColor.RED + ChatColor.BOLD.toString() + durability;
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_SNARE, 1, 1);
         } else {

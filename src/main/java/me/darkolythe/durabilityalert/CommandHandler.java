@@ -38,6 +38,8 @@ public class CommandHandler implements CommandExecutor {
                             player.sendMessage(ChatColor.GRAY + " - Warnings: " + (main.getPlayerData(player).get(0) == 0 ? "False" : "True"));
                             player.sendMessage(ChatColor.GRAY + " - Tool " + type + main.getPlayerData(player).get(2));
                             player.sendMessage(ChatColor.GRAY + " - Armour " + type + main.getPlayerData(player).get(1));
+                        } else if (args[0].equalsIgnoreCase("type")) {
+                            player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert type [percent/durability]");
                         } else {
                             player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert " + args[0] + " <percent>");
                         }
@@ -48,7 +50,7 @@ public class CommandHandler implements CommandExecutor {
                                 player.sendMessage(main.prefix + ChatColor.GREEN + main.confighandler.settype + " " + args[1]);
                                 main.joinlistener.playerSave(player);
                             } else {
-                                player.sendMessage(main.prefix + ChatColor.GREEN + main.confighandler.invalidarguments + ": /durabilityalert type [percent/durability]");
+                                player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert type [percent/durability]");
                             }
                             return true;
                         }

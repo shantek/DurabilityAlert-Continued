@@ -63,10 +63,10 @@ public final class DurabilityAlert extends JavaPlugin {
             return playerData.get(player);
         } else {
             List<Integer> data = new ArrayList<>();
-            data.add(1);
-            data.add(defaultvalue);
-            data.add(defaultvalue);
-            data.add(0);
+            data.add(1);            //toggle
+            data.add(defaultvalue); //armour
+            data.add(defaultvalue); //tools
+            data.add(0);            //type
             playerData.put(player, data);
             return playerData.get(player);
         }
