@@ -1,12 +1,12 @@
-lowdurability: "Low durability on"
-durabilityleft: "Durability left"
+lowdurability: "Low durability on %item%"
+durabilityleft: "%durability% Durability left"
 warningsdisabled: "Durability Warnings Disabled!"
 warningsenabled: "Durability Warnings Enabled!"
 invalidarguments: "Invalid Arguments"
-armourset: "Armour warning value set to"
-toolset: "Tool warning value set to"
+armourset: "Armour warning value set to %armour%"
+toolset: "Tool warning value set to %tool%"
 mustbenumber: "Percent must be a number! ex: 10"
-settype: "Warning type has been set to"
+settype: "Warning type has been set to %type%"
 
 displaytime: 10
 defaultvalue: 10

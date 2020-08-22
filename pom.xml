@@ -6,7 +6,7 @@
 
     <groupId>me.Darkolythe</groupId>
     <artifactId>DurabilityAlert</artifactId>
-    <version>1.3.7</version>
+    <version>1.4.0</version>
     <packaging>jar</packaging>
 
     <properties>
