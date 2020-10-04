@@ -11,6 +11,8 @@ public class ConfigHandler {
     String toolset;
     String mustbenumber;
     String settype;
+    String enchantedtrue;
+    String enchantedfalse;
 
     DurabilityAlert main;
     ConfigHandler(DurabilityAlert plugin) {
@@ -25,5 +27,7 @@ public class ConfigHandler {
         toolset = main.getConfig().getString("toolset");
         mustbenumber = main.getConfig().getString("mustbenumber");
         settype = main.getConfig().getString("settype");
+        enchantedtrue = main.getConfig().getString("enchantedtrue");
+        enchantedfalse = main.getConfig().getString("enchantedfalse");
     }
 }

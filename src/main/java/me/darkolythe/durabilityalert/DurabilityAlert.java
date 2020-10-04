@@ -59,25 +59,44 @@ public final class DurabilityAlert extends JavaPlugin {
     }
 
     List<Integer> getPlayerData(Player player) {
+        List<Integer> defaults = new ArrayList<>();
+        defaults.add(0);            //toggle
+        defaults.add(defaultvalue); //armour
+        defaults.add(defaultvalue); //tools
+        defaults.add(0);            //type
+        defaults.add(1);            //alert on enchanted only
+
         if (playerData.containsKey(player)) {
+            if (playerData.get(player).size() < 5) { // if the player data does not contain all required data points, add the missing ones
+                int index = 0;
+                List<Integer> data = new ArrayList<>();
+                for (int i = index; i < playerData.get(player).size(); i++) {
+                    data.add(playerData.get(player).get(i));
+                    index++;
+                }
+
+                for (int i = index; i < 5; i++) {
+                    data.add(defaults.get(i));
+                }
+                playerData.put(player, defaults);
+            }
             return playerData.get(player);
         } else {
-            List<Integer> data = new ArrayList<>();
-            data.add(1);            //toggle
-            data.add(defaultvalue); //armour
-            data.add(defaultvalue); //tools
-            data.add(0);            //type
-            playerData.put(player, data);
+            playerData.put(player, defaults); // if the player data does not exist, initialize it
             return playerData.get(player);
         }
     }
 
-    void setPlayerToggle(Player player) {
+    /*
+    Data index 0 is warning toggle
+    Data index 4 is enchant toggle
+     */
+    void setPlayerToggle(Player player, int dataIndex) {
         List<Integer> data = getPlayerData(player);
-        if (data.get(0) == 0) {
-            data.set(0, 1);
+        if (data.get(dataIndex) == 0) {
+            data.set(dataIndex, 1);
         } else {
-            data.set(0, 0);
+            data.set(dataIndex, 0);
         }
         playerData.put(player, data);
     }

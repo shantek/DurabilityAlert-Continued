@@ -39,6 +39,10 @@ public class DurabilityListener implements Listener {
                 isDamaged = true;
             }
 
+            if (item.getEnchantments().size() == 0 && data.get(4) == 1) {
+                return;
+            }
+
             if (isDamaged && data.get(0) == 1) {
                 float toolPercent = (((float) (item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage())) / ((float) (item.getType().getMaxDurability())) * 100);
                 int toolLeft = (item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage());
@@ -56,11 +60,12 @@ public class DurabilityListener implements Listener {
     private void sendWarning(Player player, String item, int durability) {
         String subtitle = "";
         if (durability <= 10) { //if the item durability is less than ten, warn the player with remaining durability
-            subtitle = ChatColor.GRAY.toString() + ChatColor.BOLD.toString() + main.confighandler.durabilityleft + ": " + ChatColor.RED + ChatColor.BOLD.toString() + durability;
+            subtitle = ChatColor.GRAY.toString() + ChatColor.BOLD.toString()
+                    + main.confighandler.durabilityleft.replaceAll("%durability%", ChatColor.RED.toString() + ChatColor.BOLD.toString() + durability);
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_SNARE, 1, 1);
         } else {
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 1, 1);
         }
-        player.sendTitle(ChatColor.RED + main.confighandler.lowdurability + " " + WordUtils.capitalize(item.toLowerCase()), subtitle, 2, DurabilityAlert.displaytime, 2);
+        player.sendTitle(ChatColor.RED + main.confighandler.lowdurability.replaceAll("%item%", WordUtils.capitalize(item.toLowerCase())), subtitle, 2, DurabilityAlert.displaytime, 2);
     }
 }
