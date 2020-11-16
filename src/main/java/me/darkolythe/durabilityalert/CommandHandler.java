@@ -33,14 +33,14 @@ public class CommandHandler implements CommandExecutor {
                             player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert type [percent/durability]");
                         } else if (args[0].equalsIgnoreCase("enchant")) {
                             main.setPlayerToggle(player, 4);
-                            if (main.getPlayerData(player).get(0) == 0) {
+                            if (main.getPlayerData(player).get(4) == 0) {
                                 player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.enchantedfalse);
                             } else {
                                 player.sendMessage(main.prefix + ChatColor.GREEN + main.confighandler.enchantedtrue);
                             }
                             main.joinlistener.playerSave(player);
                         } else {
-                            player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert " + args[0] + " <percent>");
+                            player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert [toggle/armour/tools/type/status/enchant]");
                         }
                     } else if (args.length == 2) {
                         if (args[0].equalsIgnoreCase("type")) {
