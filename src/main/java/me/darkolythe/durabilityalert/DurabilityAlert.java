@@ -14,7 +14,7 @@ public final class DurabilityAlert extends JavaPlugin {
 
     private static DurabilityAlert plugin;
 
-    final String prefix = ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "[" + ChatColor.BLUE.toString() + "DurabilityAlert" + ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "] ";
+    public static String prefix = ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "[" + ChatColor.BLUE.toString() + "DurabilityAlert" + ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "] ";
     public static int displaytime;
     public static int defaultvalue;
     public static boolean enableByDefault = false;
@@ -47,6 +47,8 @@ public final class DurabilityAlert extends JavaPlugin {
         displaytime = getConfig().getInt("displaytime");
         defaultvalue = getConfig().getInt("defaultvalue");
         enableByDefault = getConfig().getBoolean("enabled-by-default");
+
+        prefix = ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix"));
 
         System.out.println(prefix + ChatColor.GREEN + "DurabilityAlert enabled!");
     }
