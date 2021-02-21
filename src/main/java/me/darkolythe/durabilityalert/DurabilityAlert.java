@@ -17,6 +17,7 @@ public final class DurabilityAlert extends JavaPlugin {
     final String prefix = ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "[" + ChatColor.BLUE.toString() + "DurabilityAlert" + ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "] ";
     public static int displaytime;
     public static int defaultvalue;
+    public static boolean enableByDefault = false;
 
     private static Map<Player, List<Integer>> playerData = new HashMap<>();
 
@@ -45,6 +46,7 @@ public final class DurabilityAlert extends JavaPlugin {
 
         displaytime = getConfig().getInt("displaytime");
         defaultvalue = getConfig().getInt("defaultvalue");
+        enableByDefault = getConfig().getBoolean("enabled-by-default");
 
         System.out.println(prefix + ChatColor.GREEN + "DurabilityAlert enabled!");
     }
@@ -60,7 +62,7 @@ public final class DurabilityAlert extends JavaPlugin {
 
     List<Integer> getPlayerData(Player player) {
         List<Integer> defaults = new ArrayList<>();
-        defaults.add(0);            //toggle
+        defaults.add(enableByDefault ? 1 : 0); //toggle
         defaults.add(defaultvalue); //armour
         defaults.add(defaultvalue); //tools
         defaults.add(0);            //type

@@ -12,3 +12,5 @@ settype: "Warning type has been set to %type%"
 
 displaytime: 10
 defaultvalue: 10
+
+enabled-by-default: false
