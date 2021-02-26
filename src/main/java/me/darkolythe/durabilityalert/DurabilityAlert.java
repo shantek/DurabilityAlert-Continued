@@ -17,6 +17,8 @@ public final class DurabilityAlert extends JavaPlugin {
     public static String prefix = ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "[" + ChatColor.BLUE.toString() + "DurabilityAlert" + ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "] ";
     public static int displaytime;
     public static int defaultvalue;
+    public static String defaulttype;
+    public static boolean defaultenchanted;
     public static boolean enableByDefault = false;
 
     private static Map<Player, List<Integer>> playerData = new HashMap<>();
@@ -46,6 +48,8 @@ public final class DurabilityAlert extends JavaPlugin {
 
         displaytime = getConfig().getInt("displaytime");
         defaultvalue = getConfig().getInt("defaultvalue");
+        defaulttype = getConfig().getString("defaulttype");
+        defaultenchanted = getConfig().getBoolean("defaultenchanted");
         enableByDefault = getConfig().getBoolean("enabled-by-default");
 
         prefix = ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix"));
@@ -67,8 +71,8 @@ public final class DurabilityAlert extends JavaPlugin {
         defaults.add(enableByDefault ? 1 : 0); //toggle
         defaults.add(defaultvalue); //armour
         defaults.add(defaultvalue); //tools
-        defaults.add(0);            //type
-        defaults.add(1);            //alert on enchanted only
+        defaults.add(defaulttype.equals("percent") ? 0 : 1); //type
+        defaults.add(defaultenchanted ? 1 : 0);              //alert on enchanted only
 
         if (playerData.containsKey(player)) {
             if (playerData.get(player).size() < 5) { // if the player data does not contain all required data points, add the missing ones
