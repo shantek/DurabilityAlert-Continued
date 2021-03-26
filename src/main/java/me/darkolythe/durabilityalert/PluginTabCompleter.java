@@ -1,4 +1,4 @@
-package de.mindgam3s.durabilityalert.tabcompleter;
+package de.darkolythe.durabilityalert.tabcompleter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
+// made by mindgam3s
 public class PluginTabCompleter implements TabCompleter
 {
 	
