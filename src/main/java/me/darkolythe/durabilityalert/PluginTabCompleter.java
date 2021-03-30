@@ -1,4 +1,4 @@
-package de.darkolythe.durabilityalert.tabcompleter;
+package me.darkolythe.durabilityalert;
 
 import java.util.ArrayList;
 import java.util.List;

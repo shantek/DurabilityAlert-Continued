@@ -5,10 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class DurabilityAlert extends JavaPlugin {
 
@@ -41,26 +38,26 @@ public final class DurabilityAlert extends JavaPlugin {
         // register events
         getServer().getPluginManager().registerEvents(durabilitylistener, plugin);
         getServer().getPluginManager().registerEvents(joinlistener, plugin);
-        
-        
+
+
         // register commands
         this.getCommand("durabilityalert").setExecutor(new CommandHandler());
-        
+
         // register auto-complete
         this.getCommand("durabilityalert").setTabCompleter(new PluginTabCompleter("durabilityalert"));
-        
+
         //set tab completion list
-		((PluginTabCompleter)this.getCommand("durabilityalert").getTabCompleter()).setTabCompletions(
-			new TablistGroup[] {
-                new TablistGroup(new ArrayList<String>(Arrays.asList("toggle")), "durabilityalert.command"),
-                new TablistGroup(new ArrayList<String>(Arrays.asList("armour", "<number>")), "durabilityalert.command"),
-                new TablistGroup(new ArrayList<String>(Arrays.asList("tools", "<number>")), "durabilityalert.command"),
-                new TablistGroup(new ArrayList<String>(Arrays.asList("type", "percent")), "durabilityalert.command"),
-                new TablistGroup(new ArrayList<String>(Arrays.asList("type", "durability")), "durabilityalert.command"),
-                new TablistGroup(new ArrayList<String>(Arrays.asList("enchant")), "durabilityalert.command"),
-                new TablistGroup(new ArrayList<String>(Arrays.asList("status")), "durabilityalert.command")
-			}
-		);
+        ((PluginTabCompleter)this.getCommand("durabilityalert").getTabCompleter()).setTabCompletions(
+            new PluginTabCompleter.TablistGroup[] {
+                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("toggle")), "durabilityalert.command"),
+                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("armour", "<number>")), "durabilityalert.command"),
+                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("tools", "<number>")), "durabilityalert.command"),
+                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("type", "percent")), "durabilityalert.command"),
+                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("type", "durability")), "durabilityalert.command"),
+                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("enchant")), "durabilityalert.command"),
+                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("status")), "durabilityalert.command")
+            }
+        );
 
         Metrics metrics = new Metrics(plugin);
 
