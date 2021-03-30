@@ -38,9 +38,29 @@ public final class DurabilityAlert extends JavaPlugin {
         confighandler = new ConfigHandler(plugin);
         joinlistener.setup();
 
+        // register events
         getServer().getPluginManager().registerEvents(durabilitylistener, plugin);
         getServer().getPluginManager().registerEvents(joinlistener, plugin);
-        getCommand("durabilityalert").setExecutor(new CommandHandler());
+        
+        
+        // register commands
+        this.getCommand("durabilityalert").setExecutor(new CommandHandler());
+        
+        // register auto-complete
+        this.getCommand("durabilityalert").setTabCompleter(new PluginTabCompleter("durabilityalert"));
+        
+        //set tab completion list
+		((PluginTabCompleter)this.getCommand("durabilityalert").getTabCompleter()).setTabCompletions(
+			new TablistGroup[] {
+                new TablistGroup(new ArrayList<String>(Arrays.asList("toggle")), "durabilityalert.command"),
+                new TablistGroup(new ArrayList<String>(Arrays.asList("armour", "<number>")), "durabilityalert.command"),
+                new TablistGroup(new ArrayList<String>(Arrays.asList("tools", "<number>")), "durabilityalert.command"),
+                new TablistGroup(new ArrayList<String>(Arrays.asList("type", "percent")), "durabilityalert.command"),
+                new TablistGroup(new ArrayList<String>(Arrays.asList("type", "durability")), "durabilityalert.command"),
+                new TablistGroup(new ArrayList<String>(Arrays.asList("enchant")), "durabilityalert.command"),
+                new TablistGroup(new ArrayList<String>(Arrays.asList("status")), "durabilityalert.command")
+			}
+		);
 
         Metrics metrics = new Metrics(plugin);
 
