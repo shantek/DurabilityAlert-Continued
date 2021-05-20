@@ -5,18 +5,18 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class DurabilityAlert extends JavaPlugin {
 
     private static DurabilityAlert plugin;
 
-    final String prefix = ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "[" + ChatColor.BLUE.toString() + "DurabilityAlert" + ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "] ";
+    public static String prefix = ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "[" + ChatColor.BLUE.toString() + "DurabilityAlert" + ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "] ";
     public static int displaytime;
     public static int defaultvalue;
+    public static String defaulttype;
+    public static boolean defaultenchanted;
+    public static boolean enableByDefault = false;
 
     private static Map<Player, List<Integer>> playerData = new HashMap<>();
 
@@ -35,9 +35,29 @@ public final class DurabilityAlert extends JavaPlugin {
         confighandler = new ConfigHandler(plugin);
         joinlistener.setup();
 
+        // register events
         getServer().getPluginManager().registerEvents(durabilitylistener, plugin);
         getServer().getPluginManager().registerEvents(joinlistener, plugin);
-        getCommand("durabilityalert").setExecutor(new CommandHandler());
+
+
+        // register commands
+        this.getCommand("durabilityalert").setExecutor(new CommandHandler());
+
+        // register auto-complete
+        this.getCommand("durabilityalert").setTabCompleter(new PluginTabCompleter("durabilityalert"));
+
+        //set tab completion list
+        ((PluginTabCompleter)this.getCommand("durabilityalert").getTabCompleter()).setTabCompletions(
+            new PluginTabCompleter.TablistGroup[] {
+                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("toggle")), "durabilityalert.command"),
+                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("armour", "<number>")), "durabilityalert.command"),
+                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("tools", "<number>")), "durabilityalert.command"),
+                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("type", "percent")), "durabilityalert.command"),
+                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("type", "durability")), "durabilityalert.command"),
+                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("enchant")), "durabilityalert.command"),
+                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("status")), "durabilityalert.command")
+            }
+        );
 
         Metrics metrics = new Metrics(plugin);
 
@@ -45,6 +65,11 @@ public final class DurabilityAlert extends JavaPlugin {
 
         displaytime = getConfig().getInt("displaytime");
         defaultvalue = getConfig().getInt("defaultvalue");
+        defaulttype = getConfig().getString("defaulttype");
+        defaultenchanted = getConfig().getBoolean("defaultenchanted");
+        enableByDefault = getConfig().getBoolean("enabled-by-default");
+
+        prefix = ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix"));
 
         System.out.println(prefix + ChatColor.GREEN + "DurabilityAlert enabled!");
     }
@@ -60,11 +85,11 @@ public final class DurabilityAlert extends JavaPlugin {
 
     List<Integer> getPlayerData(Player player) {
         List<Integer> defaults = new ArrayList<>();
-        defaults.add(0);            //toggle
+        defaults.add(enableByDefault ? 1 : 0); //toggle
         defaults.add(defaultvalue); //armour
         defaults.add(defaultvalue); //tools
-        defaults.add(0);            //type
-        defaults.add(1);            //alert on enchanted only
+        defaults.add(defaulttype.equals("percent") ? 0 : 1); //type
+        defaults.add(defaultenchanted ? 1 : 0);              //alert on enchanted only
 
         if (playerData.containsKey(player)) {
             if (playerData.get(player).size() < 5) { // if the player data does not contain all required data points, add the missing ones

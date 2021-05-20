@@ -10,5 +10,15 @@ toolset: "Tool warning value set to %tool%"
 mustbenumber: "Percent must be a number! ex: 10"
 settype: "Warning type has been set to %type%"
 
+prefix: "&f&l[&9&lDurabilityAlert&f&l]"
+
+# alert popup display time
 displaytime: 10
+
+#user setting defaults
 defaultvalue: 10
+# 'percent' or 'durability'
+defaulttype: "percent"
+defaultenchanted: false
+
+enabled-by-default: false
