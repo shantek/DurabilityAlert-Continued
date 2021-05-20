@@ -51,7 +51,12 @@ public class JoinListener implements Listener {
 
     @EventHandler
     private void onPlayerLeave(PlayerQuitEvent event) {
-        playerSave(event.getPlayer());
+        Bukkit.getServer().getScheduler().runTaskAsynchronously(main, new Runnable() {
+            @Override
+            public void run() {
+                playerSave(event.getPlayer());
+            }
+        });
         main.removePlayerData(event.getPlayer());
     }
 
