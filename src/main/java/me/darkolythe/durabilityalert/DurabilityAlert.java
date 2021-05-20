@@ -119,6 +119,10 @@ public final class DurabilityAlert extends JavaPlugin {
         playerData.put(player, data);
     }
 
+    void removePlayerData(Player player) {
+        playerData.remove(player);
+    }
+
     void setPlayerData(Player player, List<Integer> data) {
         playerData.put(player, data);
     }

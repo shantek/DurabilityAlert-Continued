@@ -52,6 +52,7 @@ public class JoinListener implements Listener {
     @EventHandler
     private void onPlayerLeave(PlayerQuitEvent event) {
         playerSave(event.getPlayer());
+        main.removePlayerData(event.getPlayer());
     }
 
     public void onServerStop() {
