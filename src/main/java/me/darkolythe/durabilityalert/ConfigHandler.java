@@ -1,5 +1,7 @@
 package me.darkolythe.durabilityalert;
 
+import org.bukkit.ChatColor;
+
 public class ConfigHandler {
 
     String lowdurability;
@@ -18,16 +20,16 @@ public class ConfigHandler {
     ConfigHandler(DurabilityAlert plugin) {
         main = plugin;
 
-        lowdurability = main.getConfig().getString("lowdurability");
-        durabilityleft = main.getConfig().getString("durabilityleft");
-        warningsdisabled = main.getConfig().getString("warningsdisabled");
-        warningsenabled = main.getConfig().getString("warningsenabled");
-        invalidarguments = main.getConfig().getString("invalidarguments");
-        armourset = main.getConfig().getString("armourset");
-        toolset = main.getConfig().getString("toolset");
-        mustbenumber = main.getConfig().getString("mustbenumber");
-        settype = main.getConfig().getString("settype");
-        enchantedtrue = main.getConfig().getString("enchantedtrue");
-        enchantedfalse = main.getConfig().getString("enchantedfalse");
+        lowdurability = ChatColor.translateAlternateColorCodes('&', main.getConfig().getString("lowdurability"));
+        durabilityleft = ChatColor.translateAlternateColorCodes('&', main.getConfig().getString("durabilityleft"));
+        warningsdisabled = ChatColor.translateAlternateColorCodes('&', main.getConfig().getString("warningsdisabled"));
+        warningsenabled = ChatColor.translateAlternateColorCodes('&', main.getConfig().getString("warningsenabled"));
+        invalidarguments = ChatColor.translateAlternateColorCodes('&', main.getConfig().getString("invalidarguments"));
+        armourset = ChatColor.translateAlternateColorCodes('&', main.getConfig().getString("armourset"));
+        toolset = ChatColor.translateAlternateColorCodes('&', main.getConfig().getString("toolset"));
+        mustbenumber = ChatColor.translateAlternateColorCodes('&', main.getConfig().getString("mustbenumber"));
+        settype = ChatColor.translateAlternateColorCodes('&', main.getConfig().getString("settype"));
+        enchantedtrue = ChatColor.translateAlternateColorCodes('&', main.getConfig().getString("enchantedtrue"));
+        enchantedfalse = ChatColor.translateAlternateColorCodes('&', main.getConfig().getString("enchantedfalse"));
     }
 }
