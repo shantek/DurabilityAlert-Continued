@@ -10,7 +10,7 @@ toolset: "Tool warning value set to %tool%"
 mustbenumber: "Percent must be a number! ex: 10"
 settype: "Warning type has been set to %type%"
 
-prefix: "&f&l[&9&lDurabilityAlert&f&l]"
+prefix: "&f&l[&9&lDurabilityAlert&f&l] "
 
 # alert popup display time
 displaytime: 10
