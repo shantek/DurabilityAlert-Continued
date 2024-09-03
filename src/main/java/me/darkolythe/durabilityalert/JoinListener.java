@@ -13,35 +13,51 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
 
 public class JoinListener implements Listener {
 
-    private DurabilityAlert plugin = DurabilityAlert.getInstance();
+    private final DurabilityAlert plugin = DurabilityAlert.getInstance();
 
     private FileConfiguration playerDataConfig;
     private File playerData;
 
-    private DurabilityAlert main;
+    private final DurabilityAlert main;
     JoinListener(DurabilityAlert plugin) {
         main = plugin;
     }
 
     void setup() {
-        if (!plugin.getDataFolder().exists()) {
-            plugin.getDataFolder().mkdir();
+        File dataFolder = plugin.getDataFolder();
+        if (!dataFolder.exists()) {
+            if (!dataFolder.mkdir()) {
+                // Handle the error: log it, throw an exception, etc.
+                plugin.getLogger().severe("Could not create plugin data folder!");
+                // Optionally, throw an exception if this is a critical error
+                throw new RuntimeException("Failed to create data folder for DurabilityAlert plugin.");
+            }
         }
 
         playerData = new File(plugin.getDataFolder(), "PlayerData.yml");
 
         if (!playerData.exists()) {
             try {
-                playerData.createNewFile();
-                System.out.println(main.prefix + ChatColor.GREEN + "PlayerData.yml has been created");
+                if (playerData.createNewFile()) {
+                    plugin.getLogger().info(DurabilityAlert.prefix + ChatColor.GREEN + "PlayerData.yml has been created");
+                } else {
+                    plugin.getLogger().warning(DurabilityAlert.prefix + ChatColor.YELLOW + "PlayerData.yml already exists");
+                }
             } catch (IOException e) {
-                System.out.println(main.prefix + ChatColor.RED + "Could not create PlayerData.yml");
+                plugin.getLogger().severe(DurabilityAlert.prefix + ChatColor.RED + "Could not create PlayerData.yml");
+                plugin.getLogger().log(Level.SEVERE, "Exception occurred while creating PlayerData.yml", e);
             }
+        } else {
+            plugin.getLogger().warning(DurabilityAlert.prefix + ChatColor.YELLOW + "PlayerData.yml already exists");
         }
+
         playerDataConfig = YamlConfiguration.loadConfiguration(playerData);
+
+
     }
 
     @EventHandler
@@ -86,7 +102,7 @@ public class JoinListener implements Listener {
         try {
             playerDataConfig.save(playerData);
         } catch (IOException e) {
-            System.out.println(main.prefix + ChatColor.RED + "Could not save player data.");
+            System.out.println(DurabilityAlert.prefix + ChatColor.RED + "Could not save player data.");
         }
     }
 }

@@ -8,57 +8,56 @@ import org.bukkit.entity.Player;
 
 public class CommandHandler implements CommandExecutor {
 
-    private DurabilityAlert main = DurabilityAlert.getInstance();
+    private final DurabilityAlert main = DurabilityAlert.getInstance();
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandlabel, String[] args) {
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
+        if (sender instanceof Player player) {
             if (player.hasPermission("durabilityalert.command")) {
                 if (cmd.getName().equalsIgnoreCase("durabilityalert")) {
                     if (args.length == 0) {
-                        player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert [toggle/armour/tools/type/status/enchant/sound]");
+                        player.sendMessage(DurabilityAlert.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert [toggle/armour/tools/type/status/enchant/sound]");
                     } else if (args.length == 1) {
                         if (args[0].equalsIgnoreCase("sound")) {
                             main.setPlayerSound(player);
                             if (main.getPlayerData(player).get(5) == 0) {
-                                player.sendMessage(main.prefix + ChatColor.RED + "Durability alert sound disabled.");
+                                player.sendMessage(DurabilityAlert.prefix + ChatColor.RED + "Durability alert sound disabled.");
                             } else {
-                                player.sendMessage(main.prefix + ChatColor.GREEN + "Durability alert sound enabled.");
+                                player.sendMessage(DurabilityAlert.prefix + ChatColor.GREEN + "Durability alert sound enabled.");
                             }
                             main.joinlistener.playerSave(player);
                         }
                         else if (args[0].equalsIgnoreCase("toggle")) {
                             main.setPlayerToggle(player, 0);
                             if (main.getPlayerData(player).get(0) == 0) {
-                                player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.warningsdisabled);
+                                player.sendMessage(DurabilityAlert.prefix + ChatColor.RED + main.confighandler.warningsdisabled);
                             } else {
-                                player.sendMessage(main.prefix + ChatColor.GREEN + main.confighandler.warningsenabled);
+                                player.sendMessage(DurabilityAlert.prefix + ChatColor.GREEN + main.confighandler.warningsenabled);
                             }
                             main.joinlistener.playerSave(player);
                         } else if (args[0].equalsIgnoreCase("status")) {
                             Utility.printStatus(player, main);
                         } else if (args[0].equalsIgnoreCase("type")) {
-                            player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert type [percent/durability]");
+                            player.sendMessage(DurabilityAlert.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert type [percent/durability]");
                         } else if (args[0].equalsIgnoreCase("enchant")) {
                             main.setPlayerToggle(player, 4);
                             if (main.getPlayerData(player).get(4) == 0) {
-                                player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.enchantedfalse);
+                                player.sendMessage(DurabilityAlert.prefix + ChatColor.RED + main.confighandler.enchantedfalse);
                             } else {
-                                player.sendMessage(main.prefix + ChatColor.GREEN + main.confighandler.enchantedtrue);
+                                player.sendMessage(DurabilityAlert.prefix + ChatColor.GREEN + main.confighandler.enchantedtrue);
                             }
                             main.joinlistener.playerSave(player);
                         } else {
-                            player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert [toggle/armour/tools/type/status/enchant]");
+                            player.sendMessage(DurabilityAlert.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert [toggle/armour/tools/type/status/enchant]");
                         }
                     } else if (args.length == 2) {
                         if (args[0].equalsIgnoreCase("type")) {
                             if (args[1].equalsIgnoreCase("durability") || args[1].equalsIgnoreCase("percent")) {
                                 main.setPlayerType(player, (args[1].equalsIgnoreCase("durability") ? 1 : 0));
-                                player.sendMessage(main.prefix + ChatColor.GREEN + main.confighandler.settype.replaceAll("%type%", args[1]));
+                                player.sendMessage(DurabilityAlert.prefix + ChatColor.GREEN + main.confighandler.settype.replaceAll("%type%", args[1]));
                                 main.joinlistener.playerSave(player);
                             } else {
-                                player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert type [percent/durability]");
+                                player.sendMessage(DurabilityAlert.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert type [percent/durability]");
                             }
                             return true;
                         }
@@ -66,20 +65,20 @@ public class CommandHandler implements CommandExecutor {
                             int percent = Integer.parseInt(args[1]);
                             if (args[0].equalsIgnoreCase("armour") || args[0].equalsIgnoreCase("armor") || args[0].equalsIgnoreCase("a")) {
                                 main.setPlayerArmour(player, percent);
-                                player.sendMessage(main.prefix + ChatColor.GREEN + main.confighandler.armourset.replaceAll("%armour%", Integer.toString(percent)));
+                                player.sendMessage(DurabilityAlert.prefix + ChatColor.GREEN + main.confighandler.armourset.replaceAll("%armour%", Integer.toString(percent)));
                                 main.joinlistener.playerSave(player);
                             } else if (args[0].equalsIgnoreCase("tools") || args[0].equalsIgnoreCase("tool") || args[0].equalsIgnoreCase("t")) {
                                 main.setPlayerTools(player, percent);
-                                player.sendMessage(main.prefix + ChatColor.GREEN + main.confighandler.toolset.replaceAll("%tool%", Integer.toString(percent)));
+                                player.sendMessage(DurabilityAlert.prefix + ChatColor.GREEN + main.confighandler.toolset.replaceAll("%tool%", Integer.toString(percent)));
                                 main.joinlistener.playerSave(player);
                             } else {
-                                player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert [armour/tools]");
+                                player.sendMessage(DurabilityAlert.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert [armour/tools]");
                             }
                         } catch (Exception e) {
-                            player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.mustbenumber);
+                            player.sendMessage(DurabilityAlert.prefix + ChatColor.RED + main.confighandler.mustbenumber);
                         }
                     } else {
-                        player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert [toggle/armour/tools]");
+                        player.sendMessage(DurabilityAlert.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert [toggle/armour/tools]");
                     }
                 }
             }

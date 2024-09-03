@@ -1,6 +1,5 @@
 package me.darkolythe.durabilityalert;
 
-import org.bstats.bukkit.Metrics;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,14 +10,14 @@ public final class DurabilityAlert extends JavaPlugin {
 
     private static DurabilityAlert plugin;
 
-    public static String prefix = ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "[" + ChatColor.BLUE.toString() + "DurabilityAlert" + ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "] ";
+    public static String prefix = ChatColor.WHITE.toString() + ChatColor.BOLD + "[" + ChatColor.BLUE + "DurabilityAlert" + ChatColor.WHITE + ChatColor.BOLD + "] ";
     public static int displaytime;
     public static int defaultvalue;
     public static String defaulttype;
     public static boolean defaultenchanted;
     public static boolean enableByDefault = false;
 
-    private static Map<Player, List<Integer>> playerData = new HashMap<>();
+    private static final Map<Player, List<Integer>> playerData = new HashMap<>();
 
     DurabilityListener durabilitylistener;
     JoinListener joinlistener;
@@ -41,25 +40,23 @@ public final class DurabilityAlert extends JavaPlugin {
 
 
         // register commands
-        this.getCommand("durabilityalert").setExecutor(new CommandHandler());
+        Objects.requireNonNull(this.getCommand("durabilityalert")).setExecutor(new CommandHandler());
 
         // register auto-complete
-        this.getCommand("durabilityalert").setTabCompleter(new PluginTabCompleter("durabilityalert"));
+        Objects.requireNonNull(this.getCommand("durabilityalert")).setTabCompleter(new PluginTabCompleter("durabilityalert"));
 
         //set tab completion list
-        ((PluginTabCompleter)this.getCommand("durabilityalert").getTabCompleter()).setTabCompletions(
+        ((PluginTabCompleter) Objects.requireNonNull(Objects.requireNonNull(this.getCommand("durabilityalert")).getTabCompleter())).setTabCompletions(
             new PluginTabCompleter.TablistGroup[] {
-                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("toggle")), "durabilityalert.command"),
-                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("armour", "<number>")), "durabilityalert.command"),
-                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("tools", "<number>")), "durabilityalert.command"),
-                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("type", "percent")), "durabilityalert.command"),
-                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("type", "durability")), "durabilityalert.command"),
-                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("enchant")), "durabilityalert.command"),
-                new PluginTabCompleter.TablistGroup(new ArrayList<String>(Arrays.asList("status")), "durabilityalert.command")
+                new PluginTabCompleter.TablistGroup(new ArrayList<>(List.of("toggle")), "durabilityalert.command"),
+                new PluginTabCompleter.TablistGroup(new ArrayList<>(Arrays.asList("armour", "<number>")), "durabilityalert.command"),
+                new PluginTabCompleter.TablistGroup(new ArrayList<>(Arrays.asList("tools", "<number>")), "durabilityalert.command"),
+                new PluginTabCompleter.TablistGroup(new ArrayList<>(Arrays.asList("type", "percent")), "durabilityalert.command"),
+                new PluginTabCompleter.TablistGroup(new ArrayList<>(Arrays.asList("type", "durability")), "durabilityalert.command"),
+                new PluginTabCompleter.TablistGroup(new ArrayList<>(List.of("enchant")), "durabilityalert.command"),
+                new PluginTabCompleter.TablistGroup(new ArrayList<>(List.of("status")), "durabilityalert.command")
             }
         );
-
-        Metrics metrics = new Metrics(plugin);
 
         joinlistener.onServerStart();
 
@@ -69,7 +66,7 @@ public final class DurabilityAlert extends JavaPlugin {
         defaultenchanted = getConfig().getBoolean("defaultenchanted");
         enableByDefault = getConfig().getBoolean("enabled-by-default");
 
-        prefix = ChatColor.translateAlternateColorCodes('&', getConfig().getString("prefix"));
+        prefix = ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(getConfig().getString("prefix")));
 
         System.out.println(prefix + ChatColor.GREEN + "DurabilityAlert enabled!");
     }

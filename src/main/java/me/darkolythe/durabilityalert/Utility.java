@@ -12,7 +12,7 @@ public class Utility {
         } else {
             type = "durability left: ";
         }
-        player.sendMessage(main.prefix + ChatColor.WHITE + "Status for " + player.getDisplayName());
+        player.sendMessage(DurabilityAlert.prefix + ChatColor.WHITE + "Status for " + player.getDisplayName());
         player.sendMessage(ChatColor.GRAY + " - Warnings: " + (main.getPlayerData(player).get(0) == 0 ? "False" : "True"));
         player.sendMessage(ChatColor.GRAY + " - Tool " + type + main.getPlayerData(player).get(2));
         player.sendMessage(ChatColor.GRAY + " - Armour " + type + main.getPlayerData(player).get(1));

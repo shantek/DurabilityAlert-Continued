@@ -2,7 +2,6 @@ package me.darkolythe.durabilityalert;
 
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,10 +11,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 
 import java.util.List;
+import java.util.Objects;
 
 public class DurabilityListener implements Listener {
 
-    private DurabilityAlert main;
+    private final DurabilityAlert main;
     DurabilityListener(DurabilityAlert plugin) {
         main = plugin;
     }
@@ -39,12 +39,12 @@ public class DurabilityListener implements Listener {
                 isDamaged = true;
             }
 
-            if (item.getEnchantments().size() == 0 && data.get(4) == 1) {
+            if (item.getEnchantments().isEmpty() && data.get(4) == 1) {
                 return;
             }
 
             if (isDamaged && data.get(0) == 1) {
-                float toolPercent = (((float) (item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage())) / ((float) (item.getType().getMaxDurability())) * 100);
+                float toolPercent = (((float) (item.getType().getMaxDurability() - ((Damageable) Objects.requireNonNull(item.getItemMeta())).getDamage())) / ((float) (item.getType().getMaxDurability())) * 100);
                 int toolLeft = (item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage());
                 if ((data.get(3) == 0 && (toolPercent) <= percent) || (data.get(3) == 1 && (toolLeft <= percent))) {
                     if (!type.contains("shears") && !type.contains("shield") && !type.contains("elytra")) {
@@ -60,8 +60,8 @@ public class DurabilityListener implements Listener {
     private void sendWarning(Player player, String item, int durability) {
         String subtitle = "";
         if (durability <= 10) { // if the item durability is less than ten, warn the player with remaining durability
-            subtitle = ChatColor.GRAY.toString() + ChatColor.BOLD.toString()
-                    + main.confighandler.durabilityleft.replaceAll("%durability%", ChatColor.RED.toString() + ChatColor.BOLD.toString() + durability);
+            subtitle = ChatColor.GRAY + ChatColor.BOLD.toString()
+                    + main.confighandler.durabilityleft.replaceAll("%durability%", ChatColor.RED + ChatColor.BOLD.toString() + durability);
             if (main.getPlayerData(player).get(5) == 1) { // Check if sound is enabled
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_SNARE, 1, 1);
             }
