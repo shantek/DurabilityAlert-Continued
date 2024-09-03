@@ -70,8 +70,8 @@ public class JoinListener implements Listener {
     private void playerLoad(Player player) {
         if (playerDataConfig.contains("player." + player.getUniqueId())) {
             List<Integer> data = playerDataConfig.getIntegerList("player." + player.getUniqueId());
-            if (data.size() < 4) {
-                data.add(0);
+            while (data.size() < 6) { // Ensure we load the sound setting
+                data.add(1); // Default to sound enabled if missing
             }
             main.setPlayerData(player, data);
         }
@@ -86,7 +86,7 @@ public class JoinListener implements Listener {
         try {
             playerDataConfig.save(playerData);
         } catch (IOException e) {
-            System.out.println(main.prefix + ChatColor.RED + "Could not save recipes");
+            System.out.println(main.prefix + ChatColor.RED + "Could not save player data.");
         }
     }
 }

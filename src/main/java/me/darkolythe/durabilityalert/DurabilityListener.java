@@ -59,13 +59,18 @@ public class DurabilityListener implements Listener {
 
     private void sendWarning(Player player, String item, int durability) {
         String subtitle = "";
-        if (durability <= 10) { //if the item durability is less than ten, warn the player with remaining durability
+        if (durability <= 10) { // if the item durability is less than ten, warn the player with remaining durability
             subtitle = ChatColor.GRAY.toString() + ChatColor.BOLD.toString()
                     + main.confighandler.durabilityleft.replaceAll("%durability%", ChatColor.RED.toString() + ChatColor.BOLD.toString() + durability);
-            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_SNARE, 1, 1);
+            if (main.getPlayerData(player).get(5) == 1) { // Check if sound is enabled
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_SNARE, 1, 1);
+            }
         } else {
-            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 1, 1);
+            if (main.getPlayerData(player).get(5) == 1) { // Check if sound is enabled
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 1, 1);
+            }
         }
         player.sendTitle(ChatColor.RED + main.confighandler.lowdurability.replaceAll("%item%", WordUtils.capitalize(item.toLowerCase())), subtitle, 2, DurabilityAlert.displaytime, 2);
     }
+
 }

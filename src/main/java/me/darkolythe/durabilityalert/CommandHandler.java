@@ -17,9 +17,18 @@ public class CommandHandler implements CommandExecutor {
             if (player.hasPermission("durabilityalert.command")) {
                 if (cmd.getName().equalsIgnoreCase("durabilityalert")) {
                     if (args.length == 0) {
-                        player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert [toggle/armour/tools/type/status/enchant]");
+                        player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.invalidarguments + ": /durabilityalert [toggle/armour/tools/type/status/enchant/sound]");
                     } else if (args.length == 1) {
-                        if (args[0].equalsIgnoreCase("toggle")) {
+                        if (args[0].equalsIgnoreCase("sound")) {
+                            main.setPlayerSound(player);
+                            if (main.getPlayerData(player).get(5) == 0) {
+                                player.sendMessage(main.prefix + ChatColor.RED + "Durability alert sound disabled.");
+                            } else {
+                                player.sendMessage(main.prefix + ChatColor.GREEN + "Durability alert sound enabled.");
+                            }
+                            main.joinlistener.playerSave(player);
+                        }
+                        else if (args[0].equalsIgnoreCase("toggle")) {
                             main.setPlayerToggle(player, 0);
                             if (main.getPlayerData(player).get(0) == 0) {
                                 player.sendMessage(main.prefix + ChatColor.RED + main.confighandler.warningsdisabled);
