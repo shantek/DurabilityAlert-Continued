@@ -20,11 +20,12 @@ public class CommandHandler implements CommandExecutor {
                     } else if (args.length == 1) {
                         if (args[0].equalsIgnoreCase("sound")) {
                             main.setPlayerSound(player);
-                            if (main.getPlayerData(player).get(5) == 0) {
+                            if (!main.isSoundEnabled(player)) {
                                 player.sendMessage(DurabilityAlert.prefix + ChatColor.RED + "Durability alert sound disabled.");
                             } else {
                                 player.sendMessage(DurabilityAlert.prefix + ChatColor.GREEN + "Durability alert sound enabled.");
                             }
+
                             main.joinlistener.playerSave(player);
                         }
                         else if (args[0].equalsIgnoreCase("toggle")) {

@@ -10,12 +10,12 @@ import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 
-import java.util.List;
 import java.util.Objects;
 
 public class DurabilityListener implements Listener {
 
     private final DurabilityAlert main;
+
     DurabilityListener(DurabilityAlert plugin) {
         main = plugin;
     }
@@ -24,33 +24,40 @@ public class DurabilityListener implements Listener {
     private void onItemDamage(PlayerItemDamageEvent event) {
         ItemStack item = event.getItem();
         Player player = event.getPlayer();
+
         if (player.hasPermission("durabilityalert.alert")) {
             String type = item.getType().toString().toLowerCase();
-            List<Integer> data = main.getPlayerData(event.getPlayer());
 
             boolean isDamaged = false;
             int percent = 0;
 
+            // Check if the item is armor
             if (type.contains("helmet") || type.contains("chestplate") || type.contains("leggings") || type.contains("boots") || type.contains("elytra")) {
-                percent = data.get(1);
+                percent = main.getArmorThreshold(player); // Use helper method for armor threshold
                 isDamaged = true;
-            } else if (type.contains("pickaxe") || type.contains("axe") || type.contains("shovel") || type.contains("sword") || type.contains("hoe") || type.contains("fishing") || type.contains("shears") || type.contains("shield")) {
-                percent = data.get(2);
+            }
+            // Check if the item is a tool
+            else if (type.contains("pickaxe") || type.contains("axe") || type.contains("shovel") || type.contains("sword") || type.contains("hoe") || type.contains("fishing") || type.contains("shears") || type.contains("shield")) {
+                percent = main.getToolsThreshold(player); // Use helper method for tools threshold
                 isDamaged = true;
             }
 
-            if (item.getEnchantments().isEmpty() && data.get(4) == 1) {
+            // Check if the player only wants alerts for enchanted items
+            if (item.getEnchantments().isEmpty() && main.isAlertForEnchantedItemsOnly(player)) {
                 return;
             }
 
-            if (isDamaged && data.get(0) == 1) {
+            // Check if durability alerts are enabled for this player
+            if (isDamaged && main.areWarningsEnabled(player)) {
                 float toolPercent = (((float) (item.getType().getMaxDurability() - ((Damageable) Objects.requireNonNull(item.getItemMeta())).getDamage())) / ((float) (item.getType().getMaxDurability())) * 100);
                 int toolLeft = (item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage());
-                if ((data.get(3) == 0 && (toolPercent) <= percent) || (data.get(3) == 1 && (toolLeft <= percent))) {
+
+                // Determine whether to use percent or durability-based alerts
+                if ((main.isAlertTypePercent(player) && toolPercent <= percent) || (!main.isAlertTypePercent(player) && toolLeft <= percent)) {
                     if (!type.contains("shears") && !type.contains("shield") && !type.contains("elytra")) {
-                        sendWarning(player, WordUtils.capitalize(item.getType().toString().split("_")[1]), item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage() - 1);
+                        sendWarning(player, WordUtils.capitalize(item.getType().toString().split("_")[1]), toolLeft);
                     } else {
-                        sendWarning(player, WordUtils.capitalize(item.getType().toString()), item.getType().getMaxDurability() - ((Damageable) item.getItemMeta()).getDamage() - 1);
+                        sendWarning(player, WordUtils.capitalize(item.getType().toString()), toolLeft);
                     }
                 }
             }
@@ -59,18 +66,20 @@ public class DurabilityListener implements Listener {
 
     private void sendWarning(Player player, String item, int durability) {
         String subtitle = "";
-        if (durability <= 10) { // if the item durability is less than ten, warn the player with remaining durability
-            subtitle = ChatColor.GRAY + ChatColor.BOLD.toString()
-                    + main.confighandler.durabilityleft.replaceAll("%durability%", ChatColor.RED + ChatColor.BOLD.toString() + durability);
-            if (main.getPlayerData(player).get(5) == 1) { // Check if sound is enabled
+
+        // If the item durability is less than 10, warn the player with the remaining durability
+        if (durability <= 10) {
+            subtitle = ChatColor.GRAY + ChatColor.BOLD.toString() +
+                    main.confighandler.durabilityleft.replaceAll("%durability%", ChatColor.RED + ChatColor.BOLD.toString() + durability);
+            if (main.isSoundEnabled(player)) { // Use helper method for sound check
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_SNARE, 1, 1);
             }
         } else {
-            if (main.getPlayerData(player).get(5) == 1) { // Check if sound is enabled
+            if (main.isSoundEnabled(player)) { // Use helper method for sound check
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 1, 1);
             }
         }
+
         player.sendTitle(ChatColor.RED + main.confighandler.lowdurability.replaceAll("%item%", WordUtils.capitalize(item.toLowerCase())), subtitle, 2, DurabilityAlert.displaytime, 2);
     }
-
 }
