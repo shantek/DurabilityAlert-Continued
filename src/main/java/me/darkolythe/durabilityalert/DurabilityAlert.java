@@ -1,8 +1,10 @@
 package me.darkolythe.durabilityalert;
 
+import me.darkolythe.durabilityalert.Metrics;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
 
 import java.util.*;
 
@@ -16,6 +18,8 @@ public final class DurabilityAlert extends JavaPlugin {
     public static String defaulttype;
     public static boolean defaultenchanted;
     public static boolean enableByDefault = false;
+
+    public Metrics metrics;
 
     private static final Map<Player, List<Integer>> playerData = new HashMap<>();
 
@@ -69,6 +73,9 @@ public final class DurabilityAlert extends JavaPlugin {
         prefix = ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(getConfig().getString("prefix")));
 
         System.out.println(prefix + ChatColor.GREEN + "DurabilityAlert enabled!");
+
+        int pluginId = 6229;
+        Metrics metrics = new Metrics(this, pluginId);
     }
 
     @Override
