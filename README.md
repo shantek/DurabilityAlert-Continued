@@ -1,25 +1,42 @@
-# DurabilityAlert
+[![License: GPL](https://img.shields.io/badge/license-GPL-blue.svg)](LICENSE) [![Discord](https://img.shields.io/discord/628396916639793152.svg?color=%237289da&label=discord)](https://shantek.co/discord)
+
+#### Looking for the latest dev builds? You can find them [here!](https://shantek.dev/job/DurabilityAlert-Continued/)
+
+
+# Durability Alert - Continued
+
+This plugin is the continued development of the original [Durability Alert plugin](https://github.com/christopherwalkerml/DurabilityAlert), done so with permission from the original author.
+
 Alerts the user of low durability items. Percent and toggle defined by user.
 
-DurabilityAlert is a plugin that notifies the player when their items are low on durability.
+### What is Durability Alert?
+Durability Alert is a plugin that notifies the player when their items are low on durability.
 Works for: All armour, Pickaxes, Axes, Shovels, Swords, Hoes, Fishing Rod, Shears.
 
-The warning can be toggled (with the command /durabilityalert toggle) by each player so that it's not forced on everybody.
+## Commands
 
-/durabilityalert (/da) - the base command
-/durabilityalert toggle - toggles the alert per player (set by user)
-/durabilityalert armour <number> - sets the percent at which the armour durability warning will start to show (set by user)
-/durabilityalert tools <number> - sets the percent at which the tools durability warning will show (set by user)
-/durabilityalert type [percent/durability] - sets the warning values to depend on either percent left, or durability left (set by user)
-/durability enchant - Toggle whether or not alerts hould only be shown for enchanted items
+Players on the server are able to toggle and adjust their own durability alerts to suit their own needs as follows:
 
-durabilityalert.command:
-description: default durability alert command permission
-default: op
-durabilityalert.alert:
-description: allows the user to get durability alerts
-default: op
+**/durabilityalert (/da)**<br />
+The base command and short command/alias.
 
-Spoiler: config.yml
-Join my discord server for help/suggestions. I'm active there every day.
-https://discord.gg/AET9mWj
+**/durabilityalert toggle**<br />
+Toggles the Durability Alert, per player
+
+**/durabilityalert armour <number>**<br />
+Changes the threshold for the Durability Alert notification for armour, per player.
+
+**/durabilityalert tools <number>**<br />
+Changes the threshold for the Durability Alert notification for tools, per player.
+
+
+**/durabilityalert type [percent/durability]**<br /> 
+Toggles the durability remaining to be either percentage or durability, per player.
+
+**/durability enchant**<br />
+Toggles if alerts should only be shown for enchanted items
+
+## Permissions
+
+**durabilityalert.command:**<br />
+Default durability alert command to control Durability Alerts
