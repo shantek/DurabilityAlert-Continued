@@ -51,15 +51,16 @@ public final class DurabilityAlert extends JavaPlugin {
 
         //set tab completion list
         ((PluginTabCompleter) Objects.requireNonNull(Objects.requireNonNull(this.getCommand("durabilityalert")).getTabCompleter())).setTabCompletions(
-            new PluginTabCompleter.TablistGroup[] {
-                new PluginTabCompleter.TablistGroup(new ArrayList<>(List.of("toggle")), "durabilityalert.command"),
-                new PluginTabCompleter.TablistGroup(new ArrayList<>(Arrays.asList("armour", "<number>")), "durabilityalert.command"),
-                new PluginTabCompleter.TablistGroup(new ArrayList<>(Arrays.asList("tools", "<number>")), "durabilityalert.command"),
-                new PluginTabCompleter.TablistGroup(new ArrayList<>(Arrays.asList("type", "percent")), "durabilityalert.command"),
-                new PluginTabCompleter.TablistGroup(new ArrayList<>(Arrays.asList("type", "durability")), "durabilityalert.command"),
-                new PluginTabCompleter.TablistGroup(new ArrayList<>(List.of("enchant")), "durabilityalert.command"),
-                new PluginTabCompleter.TablistGroup(new ArrayList<>(List.of("status")), "durabilityalert.command")
-            }
+                new PluginTabCompleter.TablistGroup[]{
+                        new PluginTabCompleter.TablistGroup(new ArrayList<>(List.of("toggle")), "durabilityalert.command"),
+                        new PluginTabCompleter.TablistGroup(new ArrayList<>(Arrays.asList("armour", "<number>")), "durabilityalert.command"),
+                        new PluginTabCompleter.TablistGroup(new ArrayList<>(Arrays.asList("tools", "<number>")), "durabilityalert.command"),
+                        new PluginTabCompleter.TablistGroup(new ArrayList<>(Arrays.asList("type", "percent")), "durabilityalert.command"),
+                        new PluginTabCompleter.TablistGroup(new ArrayList<>(Arrays.asList("type", "durability")), "durabilityalert.command"),
+                        new PluginTabCompleter.TablistGroup(new ArrayList<>(List.of("enchant")), "durabilityalert.command"),
+                        new PluginTabCompleter.TablistGroup(new ArrayList<>(List.of("status")), "durabilityalert.command"),
+                        new PluginTabCompleter.TablistGroup(new ArrayList<>(List.of("sound")), "durabilityalert.command")
+                }
         );
 
         joinlistener.onServerStart();
