@@ -75,7 +75,7 @@ public final class DurabilityAlert extends JavaPlugin {
 
         System.out.println(prefix + ChatColor.GREEN + "DurabilityAlert enabled!");
 
-        int pluginId = 6229;
+        int pluginId = 23275;
         Metrics metrics = new Metrics(this, pluginId);
     }
 
