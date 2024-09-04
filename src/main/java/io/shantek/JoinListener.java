@@ -1,4 +1,4 @@
-package me.darkolythe.durabilityalert;
+package io.shantek;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
@@ -12,7 +12,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.logging.Level;
 
 public class JoinListener implements Listener {
@@ -23,17 +22,16 @@ public class JoinListener implements Listener {
     private File playerData;
 
     private final DurabilityAlert main;
-    JoinListener(DurabilityAlert plugin) {
+
+    public JoinListener(DurabilityAlert plugin) {
         main = plugin;
     }
 
-    void setup() {
+    public void setup() {
         File dataFolder = plugin.getDataFolder();
         if (!dataFolder.exists()) {
             if (!dataFolder.mkdir()) {
-                // Handle the error: log it, throw an exception, etc.
                 plugin.getLogger().severe("Could not create plugin data folder!");
-                // Optionally, throw an exception if this is a critical error
                 throw new RuntimeException("Failed to create data folder for DurabilityAlert plugin.");
             }
         }
@@ -56,19 +54,22 @@ public class JoinListener implements Listener {
         }
 
         playerDataConfig = YamlConfiguration.loadConfiguration(playerData);
-
-
     }
 
     @EventHandler
-    private void onPlayerJoin(PlayerJoinEvent event) {
-        playerLoad(event.getPlayer());
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        // Load player data from file (if present)
+        playerLoad(player);
     }
 
     @EventHandler
-    private void onPlayerLeave(PlayerQuitEvent event) {
-        playerSave(event.getPlayer());
-        main.removePlayerData(event.getPlayer());
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+        // Save player settings to file when they quit
+        playerSave(player);
+        // Remove player settings from memory
+        plugin.removePlayerSettings(player);
     }
 
     public void onServerStop() {
@@ -85,24 +86,36 @@ public class JoinListener implements Listener {
 
     private void playerLoad(Player player) {
         if (playerDataConfig.contains("player." + player.getUniqueId())) {
-            List<Integer> data = playerDataConfig.getIntegerList("player." + player.getUniqueId());
-            while (data.size() < 6) { // Ensure we load the sound setting
-                data.add(1); // Default to sound enabled if missing
-            }
-            main.setPlayerData(player, data);
+            String path = "player." + player.getUniqueId();
+            boolean warningsEnabled = playerDataConfig.getBoolean(path + ".warningsEnabled", DurabilityAlert.isEnableByDefault());
+            int armorThreshold = playerDataConfig.getInt(path + ".armorThreshold", DurabilityAlert.getDefaultValue());
+            int toolsThreshold = playerDataConfig.getInt(path + ".toolsThreshold", DurabilityAlert.getDefaultValue());
+            PlayerSettings.AlertType alertType = PlayerSettings.AlertType.valueOf(playerDataConfig.getString(path + ".alertType", DurabilityAlert.getDefaultType().name()));
+            boolean enchantedItemsOnly = playerDataConfig.getBoolean(path + ".enchantedItemsOnly", DurabilityAlert.isDefaultEnchanted());
+            boolean soundEnabled = playerDataConfig.getBoolean(path + ".soundEnabled", true);
+
+            // Create a new PlayerSettings object based on the loaded values
+            PlayerSettings settings = new PlayerSettings(warningsEnabled, armorThreshold, toolsThreshold, alertType, enchantedItemsOnly, soundEnabled);
+            main.setPlayerData(player, settings);
         }
     }
 
     void playerSave(Player player) {
-        playerDataConfig = YamlConfiguration.loadConfiguration(playerData);
+        PlayerSettings settings = main.getPlayerSettings(player); // Get the player settings object
 
         String path = "player." + player.getUniqueId();
-        playerDataConfig.set(path, main.getPlayerData(player));
+        playerDataConfig.set(path + ".warningsEnabled", settings.isWarningsEnabled());
+        playerDataConfig.set(path + ".armorThreshold", settings.getArmorThreshold());
+        playerDataConfig.set(path + ".toolsThreshold", settings.getToolsThreshold());
+        playerDataConfig.set(path + ".alertType", settings.getAlertType().name());
+        playerDataConfig.set(path + ".enchantedItemsOnly", settings.isEnchantedItemsOnly());
+        playerDataConfig.set(path + ".soundEnabled", settings.isSoundEnabled());
 
         try {
             playerDataConfig.save(playerData);
         } catch (IOException e) {
-            System.out.println(DurabilityAlert.prefix + ChatColor.RED + "Could not save player data.");
+            plugin.getLogger().severe(DurabilityAlert.prefix + ChatColor.RED + "Could not save player data.");
+            plugin.getLogger().log(Level.SEVERE, "Exception occurred while saving PlayerData.yml", e);
         }
     }
 }

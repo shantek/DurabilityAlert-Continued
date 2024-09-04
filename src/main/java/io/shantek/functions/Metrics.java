@@ -1,4 +1,4 @@
-package me.darkolythe.durabilityalert;
+package io.shantek.functions;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;

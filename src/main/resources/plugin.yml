@@ -1,6 +1,6 @@
 name: DurabilityAlert
 version: 1.6.0
-main: me.darkolythe.durabilityalert.DurabilityAlert
+main: io.shantek.DurabilityAlert
 api-version: 1.13
 
 commands:
@@ -8,13 +8,13 @@ commands:
     usage: /<command>
     aliases: [da]
     description: the base durabilityalert command
-    permission: durabilityalert.command
+    permission: shantek.durabilityalert.command
     permission-message: You do not have permission!
 
 permissions:
-  durabilityalert.command:
+  shantek.durabilityalert.command:
     description: default durability alert command permission
     default: op
-  durabilityalert.alert:
+  shantek.durabilityalert.alert:
     description: allows the user to get durability alerts
     default: op
