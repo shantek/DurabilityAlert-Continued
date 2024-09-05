@@ -29,7 +29,7 @@ public class CommandHandler implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (!player.hasPermission("shantek.durabilityalert.command")) {
+        if (!player.hasPermission("shantek.durabilityalert.use")) {
             player.sendMessage(main.configHandler.prefix + ChatColor.RED + "You do not have permission to use this command.");
             return true;
         }

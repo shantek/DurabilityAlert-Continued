@@ -1,5 +1,5 @@
 name: DurabilityAlertReloaded
-version: 1.6.0
+version: 1.6.1
 main: io.shantek.DurabilityAlertContinued
 api-version: 1.13
 
@@ -8,13 +8,13 @@ commands:
     usage: /<command>
     aliases: [da]
     description: the base durabilityalert command
-    permission: shantek.durabilityalert.command
+    permission: shantek.durabilityalert.use
     permission-message: You do not have permission!
 
 permissions:
-  shantek.durabilityalert.command:
-    description: default durability alert command permission
-    default: op
-  shantek.durabilityalert.alert:
+  shantek.durabilityalert.use:
     description: allows the user to get durability alerts
+    default: op
+  shantek.durabilityalert.reload:
+    description: ability to reload the plugin
     default: op

@@ -25,7 +25,7 @@ public class DurabilityListener implements Listener {
         ItemStack item = event.getItem();
         Player player = event.getPlayer();
 
-        if (!player.hasPermission("shantek.durabilityalert.alert")) {
+        if (!player.hasPermission("shantek.durabilityalert.use")) {
             return;
         }
 
