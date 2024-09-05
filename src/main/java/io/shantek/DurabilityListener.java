@@ -118,6 +118,7 @@ public class DurabilityListener implements Listener {
 
     private void playWarningSound(Player player, int durability) {
         Sound sound = durability <= 10 ? Sound.BLOCK_NOTE_BLOCK_SNARE : Sound.BLOCK_NOTE_BLOCK_BASEDRUM;
-        player.playSound(player.getLocation(), sound, 1, 1);
+        // Use the sound volume from the config
+        player.playSound(player.getLocation(), sound, main.configHandler.soundVolume, 1);
     }
 }

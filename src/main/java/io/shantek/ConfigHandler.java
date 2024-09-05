@@ -20,6 +20,7 @@ public class ConfigHandler {
     public String soundEnabled;
     public String soundDisabled;
     public String prefix;
+    public float soundVolume;
 
     public ConfigHandler(DurabilityAlertContinued plugin) {
         this.plugin = plugin;
@@ -47,5 +48,8 @@ public class ConfigHandler {
         durabilityLeft = config.getString("durabilityleft", "%durability% Remaining");
         soundEnabled = config.getString("soundenabled", "Durability alert sound enabled.");
         soundDisabled = config.getString("sounddisabled", "Durability alert sound disabled.");
+
+        // Load the volume setting with default 1.0
+        soundVolume = (float) config.getDouble("soundvolume", 1.0);
     }
 }

@@ -38,3 +38,6 @@ defaultenchanted: false
 # Should Durability Alert be enabled for players by default?
 # Can be 'true' or 'false'
 enabled-by-default: false
+
+# Sound volume (1.0 is default, 0.0 is mute, and can go up to 2.0)
+soundvolume: 1.0
