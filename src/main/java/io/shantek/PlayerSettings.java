@@ -11,13 +11,14 @@ public class PlayerSettings {
 
     // Default constructor
     public PlayerSettings() {
-        this.warningsEnabled = true; // Default warnings enabled
-        this.armorThreshold = 10; // Default armor threshold
-        this.toolsThreshold = 10; // Default tools threshold
-        this.alertType = AlertType.PERCENT; // Default alert type
-        this.enchantedItemsOnly = false; // Default no enchanted items only
-        this.soundEnabled = true; // Default sound enabled
+        this.warningsEnabled = DurabilityAlert.isEnableByDefault();
+        this.armorThreshold = DurabilityAlert.getDefaultValue();
+        this.toolsThreshold = DurabilityAlert.getDefaultValue();
+        this.alertType = DurabilityAlert.getDefaultType();
+        this.enchantedItemsOnly = DurabilityAlert.isDefaultEnchanted();
+        this.soundEnabled = true;
     }
+
 
     // Constructor with parameters
     public PlayerSettings(boolean warningsEnabled, int armorThreshold, int toolsThreshold, AlertType alertType, boolean enchantedItemsOnly, boolean soundEnabled) {
@@ -83,4 +84,20 @@ public class PlayerSettings {
         PERCENT,
         DURABILITY
     }
+
+    // In PlayerSettings.java
+
+    public boolean getSetting(DurabilityAlert.Setting setting) {
+        switch (setting) {
+            case WARNINGS_ENABLED:
+                return isWarningsEnabled();
+            case ENCHANTED_ITEMS_ONLY:
+                return isEnchantedItemsOnly();
+            case SOUND_ENABLED:
+                return isSoundEnabled();
+            default:
+                throw new IllegalArgumentException("Unknown setting: " + setting);
+        }
+    }
+
 }

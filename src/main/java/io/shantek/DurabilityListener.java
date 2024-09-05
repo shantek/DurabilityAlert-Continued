@@ -16,7 +16,7 @@ public class DurabilityListener implements Listener {
 
     private final DurabilityAlert main;
 
-    DurabilityListener(DurabilityAlert plugin) {
+    public DurabilityListener(DurabilityAlert plugin) {
         main = plugin;
     }
 
@@ -25,87 +25,99 @@ public class DurabilityListener implements Listener {
         ItemStack item = event.getItem();
         Player player = event.getPlayer();
 
-        if (player.hasPermission("durabilityalert.alert")) {
-            String type = item.getType().toString().toLowerCase();
+        if (!player.hasPermission("durabilityalert.alert")) {
+            return;
+        }
 
-            boolean isDamaged = false;
-            int threshold = 0;
+        String type = item.getType().toString().toLowerCase();
+        PlayerSettings settings = main.getPlayerSettings(player);
 
-            // Check if the item is armor
-            if (isArmor(type)) {
-                threshold = main.getPlayerSettings(player).getArmorThreshold();
-                isDamaged = true;
-            }
-            // Check if the item is a tool
-            else if (isTool(type)) {
-                threshold = main.getPlayerSettings(player).getToolsThreshold();
-                isDamaged = true;
-            }
+        if (!settings.isWarningsEnabled()) {
+            return; // Exit early if warnings are disabled
+        }
 
-            // Check if the player only wants alerts for enchanted items
-            if (item.getEnchantments().isEmpty() && main.getPlayerSettings(player).isEnchantedItemsOnly()) {
-                return;
-            }
+        boolean isArmor = isArmor(type);
+        boolean isTool = isTool(type);
 
-            // Check if durability alerts are enabled for this player
-            PlayerSettings settings = main.getPlayerSettings(player);
-            if (isDamaged && settings.isWarningsEnabled()) {
-                float toolPercent = ((float) (item.getType().getMaxDurability() - ((Damageable) Objects.requireNonNull(item.getItemMeta())).getDamage())
-                        / item.getType().getMaxDurability()) * 100;
-                int toolLeft = item.getType().getMaxDurability() - ((Damageable) Objects.requireNonNull(item.getItemMeta())).getDamage();
+        // Check if the item should trigger a warning
+        if (!isArmor && !isTool) {
+            return; // Exit early if it's neither armor nor tool
+        }
 
-                boolean alert = false;
-                if (settings.getAlertType() == PlayerSettings.AlertType.PERCENT && toolPercent <= threshold) {
-                    alert = true;
-                } else if (settings.getAlertType() == PlayerSettings.AlertType.DURABILITY && toolLeft <= threshold) {
-                    alert = true;
-                }
+        // Check for enchanted item alert condition
+        if (item.getEnchantments().isEmpty() && settings.isEnchantedItemsOnly()) {
+            return; // Exit early if player only wants alerts for enchanted items
+        }
 
-                if (alert) {
-                    String itemName = getFormattedItemName(type, item);
-                    sendWarning(player, itemName, toolLeft, settings.isSoundEnabled());
-                }
-            }
+        int threshold = isArmor ? settings.getArmorThreshold() : settings.getToolsThreshold();
+        int durabilityLeft = calculateDurabilityLeft(item);
+        float percentLeft = calculateDurabilityPercent(item);
+
+        boolean shouldAlert = shouldTriggerAlert(settings, percentLeft, durabilityLeft, threshold);
+
+        if (shouldAlert) {
+            String itemName = getFormattedItemName(type, item);
+            sendWarning(player, itemName, durabilityLeft, settings.isSoundEnabled());
+        }
+    }
+
+    // Calculate how much durability is left
+    private int calculateDurabilityLeft(ItemStack item) {
+        return item.getType().getMaxDurability() - ((Damageable) Objects.requireNonNull(item.getItemMeta())).getDamage();
+    }
+
+    // Calculate the percentage of durability left
+    private float calculateDurabilityPercent(ItemStack item) {
+        return ((float) calculateDurabilityLeft(item) / item.getType().getMaxDurability()) * 100;
+    }
+
+    // Check whether to trigger an alert based on settings
+    private boolean shouldTriggerAlert(PlayerSettings settings, float percentLeft, int durabilityLeft, int threshold) {
+        if (settings.getAlertType() == PlayerSettings.AlertType.PERCENT) {
+            return percentLeft <= threshold;
+        } else {
+            return durabilityLeft <= threshold;
         }
     }
 
     private boolean isArmor(String type) {
-        return type.contains("helmet") || type.contains("chestplate") || type.contains("leggings") || type.contains("boots") || type.contains("elytra");
+        return type.contains("helmet") || type.contains("chestplate") || type.contains("leggings")
+                || type.contains("boots") || type.contains("elytra");
     }
 
     private boolean isTool(String type) {
-        return type.contains("pickaxe") || type.contains("axe") || type.contains("shovel") || type.contains("sword") ||
-                type.contains("hoe") || type.contains("fishing") || type.contains("shears") || type.contains("shield");
+        return type.contains("pickaxe") || type.contains("axe") || type.contains("shovel")
+                || type.contains("sword") || type.contains("hoe") || type.contains("fishing")
+                || type.contains("shears") || type.contains("shield");
     }
 
     private String getFormattedItemName(String type, ItemStack item) {
-        if (!type.contains("shears") && !type.contains("shield") && !type.contains("elytra")) {
-            String[] parts = item.getType().toString().split("_");
-            if (parts.length > 1) {
-                return WordUtils.capitalize(parts[1].toLowerCase());
-            }
+        String[] parts = item.getType().toString().split("_");
+        if (parts.length > 1) {
+            return WordUtils.capitalize(parts[1].toLowerCase());
         }
-        return WordUtils.capitalize(item.getType().toString().toLowerCase());
+        return WordUtils.capitalize(type.toLowerCase());
     }
 
     private void sendWarning(Player player, String item, int durability, boolean soundEnabled) {
-        String subtitle = "";
-
-        // If the item durability is less than or equal to 10, warn the player with the remaining durability
-        if (durability <= 10) {
-            subtitle = ChatColor.GRAY.toString() + ChatColor.BOLD +
-                    main.configHandler.durabilityLeft.replaceAll("%durability%", ChatColor.RED.toString() + ChatColor.BOLD + durability);
-            if (soundEnabled) {
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_SNARE, 1, 1);
-            }
-        } else {
-            if (soundEnabled) {
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 1, 1);
-            }
+        String subtitle = buildSubtitle(durability);
+        if (soundEnabled) {
+            playWarningSound(player, durability);
         }
-
         String title = ChatColor.RED + main.configHandler.lowDurability.replaceAll("%item%", item);
         player.sendTitle(title, subtitle, 2, DurabilityAlert.getDisplayTime(), 2);
+    }
 
+    private String buildSubtitle(int durability) {
+        if (durability <= 10) {
+            return ChatColor.GRAY.toString() + ChatColor.BOLD + main.configHandler.durabilityLeft
+                    .replaceAll("%durability%", ChatColor.RED.toString() + ChatColor.BOLD + durability);
+        }
+        return "";
+    }
+
+    private void playWarningSound(Player player, int durability) {
+        Sound sound = durability <= 10 ? Sound.BLOCK_NOTE_BLOCK_SNARE : Sound.BLOCK_NOTE_BLOCK_BASEDRUM;
+        player.playSound(player.getLocation(), sound, 1, 1);
     }
 }

@@ -12,6 +12,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.logging.Level;
 
 public class JoinListener implements Listener {
@@ -29,11 +31,9 @@ public class JoinListener implements Listener {
 
     public void setup() {
         File dataFolder = plugin.getDataFolder();
-        if (!dataFolder.exists()) {
-            if (!dataFolder.mkdir()) {
-                plugin.getLogger().severe("Could not create plugin data folder!");
-                throw new RuntimeException("Failed to create data folder for DurabilityAlert plugin.");
-            }
+        if (!dataFolder.exists() && !dataFolder.mkdir()) {
+            plugin.getLogger().severe("Could not create plugin data folder!");
+            throw new RuntimeException("Failed to create data folder for DurabilityAlert plugin.");
         }
 
         playerData = new File(plugin.getDataFolder(), "PlayerData.yml");
@@ -112,7 +112,10 @@ public class JoinListener implements Listener {
         playerDataConfig.set(path + ".soundEnabled", settings.isSoundEnabled());
 
         try {
-            playerDataConfig.save(playerData);
+            // Use try-with-resources to handle file saving more securely
+            File tempFile = new File(plugin.getDataFolder(), "PlayerData_temp.yml");
+            playerDataConfig.save(tempFile);
+            Files.move(tempFile.toPath(), playerData.toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             plugin.getLogger().severe(DurabilityAlert.prefix + ChatColor.RED + "Could not save player data.");
             plugin.getLogger().log(Level.SEVERE, "Exception occurred while saving PlayerData.yml", e);

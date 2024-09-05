@@ -16,6 +16,8 @@ armourset: "Armour warning value set to %armour%"
 toolset: "Tool warning value set to %tool%"
 mustbenumber: "Percent must be a number! ex: 10"
 settype: "Warning type has been set to %type%"
+soundenabled: "Durability alert sound enabled."
+sounddisabled: "Durability alert sound disabled."
 
 prefix: "&f&l[&9&lDurabilityAlert&f&l] "
 

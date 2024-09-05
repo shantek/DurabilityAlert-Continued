@@ -48,37 +48,39 @@ public class CommandHandler implements CommandExecutor {
         String subCommand = args[0].toLowerCase();
 
         switch (subCommand) {
-            case TOGGLE_COMMAND -> handleToggleCommand(player);
-            case SOUND_COMMAND -> handleSoundCommand(player);
+            case TOGGLE_COMMAND -> handleToggleCommand(player, DurabilityAlert.Setting.WARNINGS_ENABLED,
+                    main.configHandler.warningsEnabled, main.configHandler.warningsDisabled);
+            case SOUND_COMMAND -> handleToggleCommand(player, DurabilityAlert.Setting.SOUND_ENABLED,
+                    "Durability alert sound enabled.", "Durability alert sound disabled.");
             case STATUS_COMMAND -> Utility.printStatus(player, main);
             case TYPE_COMMAND -> handleTypeCommand(player, args);
-            case ENCHANT_COMMAND -> handleEnchantCommand(player);
+            case ENCHANT_COMMAND -> handleToggleCommand(player, DurabilityAlert.Setting.ENCHANTED_ITEMS_ONLY,
+                    main.configHandler.enchantedTrue, main.configHandler.enchantedFalse);
             case ARMOR_COMMAND, TOOLS_COMMAND -> handleThresholdCommands(player, subCommand, args);
             default -> sendInvalidArgumentsMessage(player);
         }
     }
 
-    private void handleToggleCommand(Player player) {
-        main.togglePlayerSetting(player, DurabilityAlert.Setting.WARNINGS_ENABLED);
-        boolean enabled = main.getPlayerSettings(player).isWarningsEnabled();
-        if (!enabled) {
-            player.sendMessage(DurabilityAlert.prefix + ChatColor.RED + main.configHandler.warningsDisabled);
-        } else {
-            player.sendMessage(DurabilityAlert.prefix + ChatColor.GREEN + main.configHandler.warningsEnabled);
-        }
+
+    private void handleToggleCommand(Player player, DurabilityAlert.Setting setting, String messageEnabled, String messageDisabled) {
+        main.togglePlayerSetting(player, setting);
+        boolean isEnabled = main.getPlayerSettings(player).getSetting(setting);
+        player.sendMessage(DurabilityAlert.prefix + (isEnabled ? messageEnabled : messageDisabled));
         main.joinListener.playerSave(player);
     }
+
 
     private void handleSoundCommand(Player player) {
         main.togglePlayerSetting(player, DurabilityAlert.Setting.SOUND_ENABLED);
         boolean soundEnabled = main.getPlayerSettings(player).isSoundEnabled();
         if (!soundEnabled) {
-            player.sendMessage(DurabilityAlert.prefix + ChatColor.RED + "Durability alert sound disabled.");
+            player.sendMessage(DurabilityAlert.prefix + ChatColor.RED + main.configHandler.soundDisabled);
         } else {
-            player.sendMessage(DurabilityAlert.prefix + ChatColor.GREEN + "Durability alert sound enabled.");
+            player.sendMessage(DurabilityAlert.prefix + ChatColor.GREEN + main.configHandler.soundEnabled);
         }
         main.joinListener.playerSave(player);
     }
+
 
     private void handleTypeCommand(Player player, String[] args) {
         if (args.length < 2 || (!args[1].equalsIgnoreCase("percent") && !args[1].equalsIgnoreCase("durability"))) {

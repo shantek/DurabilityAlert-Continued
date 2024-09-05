@@ -16,6 +16,8 @@ public class ConfigHandler {
     public String mustBeNumber;
     public String lowDurability;
     public String durabilityLeft;
+    public String soundEnabled;
+    public String soundDisabled;
 
     public ConfigHandler(DurabilityAlert plugin) {
         this.plugin = plugin;
@@ -26,16 +28,18 @@ public class ConfigHandler {
         FileConfiguration config = plugin.getConfig();
 
         // Load messages with defaults
-        invalidArguments = config.getString("messages.invalid-arguments", "Invalid arguments");
-        warningsEnabled = config.getString("messages.warnings-enabled", "Warnings enabled.");
-        warningsDisabled = config.getString("messages.warnings-disabled", "Warnings disabled.");
-        enchantedTrue = config.getString("messages.enchanted-true", "Alerts for enchanted items only enabled.");
-        enchantedFalse = config.getString("messages.enchanted-false", "Alerts for enchanted items only disabled.");
-        setType = config.getString("messages.set-type", "Alert type set to %type%.");
-        armourSet = config.getString("messages.armour-set", "Armor threshold set to %armour%.");
-        toolSet = config.getString("messages.tool-set", "Tools threshold set to %tool%.");
-        mustBeNumber = config.getString("messages.must-be-number", "The value must be a number.");
-        lowDurability = config.getString("messages.low-durability", "Low durability on %item%");
-        durabilityLeft = config.getString("messages.durability-left", "Durability left: %durability%");
+        invalidArguments = config.getString("invalidarguments", "Invalid Arguments");
+        warningsEnabled = config.getString("warningsenabled", "Warnings enabled.");
+        warningsDisabled = config.getString("warningsdisabled", "Warnings disabled.");
+        enchantedTrue = config.getString("enchantedtrue", "Alerts will only show for enchanted items.");
+        enchantedFalse = config.getString("enchantedfalse", "Alerts will show for all items.");
+        setType = config.getString("settype", "Warning type has been set to %type%.");
+        armourSet = config.getString("armourset", "Armor warning value set to %armour%.");
+        toolSet = config.getString("toolset", "Tools warning value set to %tool%.");
+        mustBeNumber = config.getString("mustbenumber", "Percent must be a number! ex: 10");
+        lowDurability = config.getString("lowdurability", "Durability Warning");
+        durabilityLeft = config.getString("durabilityleft", "%durability% Remaining");
+        soundEnabled = config.getString("soundenabled", "Durability alert sound enabled.");
+        soundDisabled = config.getString("sounddisabled", "Durability alert sound disabled.");
     }
 }
