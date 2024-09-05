@@ -1,10 +1,11 @@
 package io.shantek;
 
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class ConfigHandler {
 
-    private final DurabilityAlert plugin;
+    private final DurabilityAlertContinued plugin;
     public String invalidArguments;
     public String warningsEnabled;
     public String warningsDisabled;
@@ -18,14 +19,19 @@ public class ConfigHandler {
     public String durabilityLeft;
     public String soundEnabled;
     public String soundDisabled;
+    public String prefix;
 
-    public ConfigHandler(DurabilityAlert plugin) {
+    public ConfigHandler(DurabilityAlertContinued plugin) {
         this.plugin = plugin;
         loadConfig();
     }
 
-    private void loadConfig() {
+    public void loadConfig() {
         FileConfiguration config = plugin.getConfig();
+
+        // Load and translate the prefix to Minecraft color codes
+        prefix = ChatColor.translateAlternateColorCodes('&', config.getString("prefix", "&f&l[&9&lDurabilityAlert&f&l] ")) + ChatColor.RESET;
+
 
         // Load messages with defaults
         invalidArguments = config.getString("invalidarguments", "Invalid Arguments");

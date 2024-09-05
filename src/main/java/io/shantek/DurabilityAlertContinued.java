@@ -2,15 +2,14 @@ package io.shantek;
 
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-public final class DurabilityAlert extends JavaPlugin {
+public final class DurabilityAlertContinued extends JavaPlugin {
 
-    private static DurabilityAlert plugin;
+    private static DurabilityAlertContinued plugin;
 
     // Default settings
     private static boolean enableByDefault;
@@ -20,7 +19,7 @@ public final class DurabilityAlert extends JavaPlugin {
     private static int displayTime;
 
     // Prefix used in messages
-    public static String prefix = "[DurabilityAlert]";
+    public static String prefix = "&f&l[&9&lDurabilityAlert&f&l] ";
 
     // Map to store player settings
     private final Map<UUID, PlayerSettings> playerData = new HashMap<>();
@@ -48,6 +47,11 @@ public final class DurabilityAlert extends JavaPlugin {
 
         // Register events
         getServer().getPluginManager().registerEvents(joinListener, this);
+        // Register the DurabilityListener
+        getServer().getPluginManager().registerEvents(new DurabilityListener(this), this);
+
+        // Register the tab completer
+        Objects.requireNonNull(this.getCommand("durabilityalert")).setTabCompleter(new DurabilityTabCompleter());
 
         // Register commands
         Objects.requireNonNull(this.getCommand("durabilityalert")).setExecutor(new CommandHandler());
@@ -62,7 +66,7 @@ public final class DurabilityAlert extends JavaPlugin {
         joinListener.onServerStop();
     }
 
-    public static DurabilityAlert getInstance() {
+    public static DurabilityAlertContinued getInstance() {
         return plugin;
     }
 

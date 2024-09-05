@@ -1,6 +1,6 @@
-name: DurabilityAlert
+name: DurabilityAlertReloaded
 version: 1.6.0
-main: io.shantek.DurabilityAlert
+main: io.shantek.DurabilityAlertContinued
 api-version: 1.13
 
 commands:

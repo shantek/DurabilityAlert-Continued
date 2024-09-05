@@ -9,31 +9,31 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.logging.Level;
 
 public class JoinListener implements Listener {
 
-    private final DurabilityAlert plugin = DurabilityAlert.getInstance();
+    private final DurabilityAlertContinued plugin = DurabilityAlertContinued.getInstance();
 
     private FileConfiguration playerDataConfig;
     private File playerData;
 
-    private final DurabilityAlert main;
+    private final DurabilityAlertContinued main;
 
-    public JoinListener(DurabilityAlert plugin) {
+    public JoinListener(DurabilityAlertContinued plugin) {
         main = plugin;
+        setup(); // Ensure setup is called in the constructor, so the file is created at startup
     }
 
     public void setup() {
         File dataFolder = plugin.getDataFolder();
-        if (!dataFolder.exists() && !dataFolder.mkdir()) {
-            plugin.getLogger().severe("Could not create plugin data folder!");
-            throw new RuntimeException("Failed to create data folder for DurabilityAlert plugin.");
+        if (!dataFolder.exists()) {
+            if (!dataFolder.mkdir()) {
+                plugin.getLogger().severe("Could not create plugin data folder!");
+                throw new RuntimeException("Failed to create data folder for DurabilityAlertContinued plugin.");
+            }
         }
 
         playerData = new File(plugin.getDataFolder(), "PlayerData.yml");
@@ -41,16 +41,14 @@ public class JoinListener implements Listener {
         if (!playerData.exists()) {
             try {
                 if (playerData.createNewFile()) {
-                    plugin.getLogger().info(DurabilityAlert.prefix + ChatColor.GREEN + "PlayerData.yml has been created");
+                    plugin.getLogger().info(DurabilityAlertContinued.prefix + ChatColor.GREEN + "PlayerData.yml has been created");
                 } else {
-                    plugin.getLogger().warning(DurabilityAlert.prefix + ChatColor.YELLOW + "PlayerData.yml already exists");
+                    plugin.getLogger().warning(DurabilityAlertContinued.prefix + ChatColor.YELLOW + "PlayerData.yml already exists");
                 }
             } catch (IOException e) {
-                plugin.getLogger().severe(DurabilityAlert.prefix + ChatColor.RED + "Could not create PlayerData.yml");
+                plugin.getLogger().severe(DurabilityAlertContinued.prefix + ChatColor.RED + "Could not create PlayerData.yml");
                 plugin.getLogger().log(Level.SEVERE, "Exception occurred while creating PlayerData.yml", e);
             }
-        } else {
-            plugin.getLogger().warning(DurabilityAlert.prefix + ChatColor.YELLOW + "PlayerData.yml already exists");
         }
 
         playerDataConfig = YamlConfiguration.loadConfiguration(playerData);
@@ -79,6 +77,8 @@ public class JoinListener implements Listener {
     }
 
     public void onServerStart() {
+        // Ensure player data file is ready when the server starts
+        setup();  // Make sure setup is called again on server start to ensure the file is ready
         for (Player p : Bukkit.getServer().getOnlinePlayers()) {
             playerLoad(p);
         }
@@ -87,11 +87,11 @@ public class JoinListener implements Listener {
     private void playerLoad(Player player) {
         if (playerDataConfig.contains("player." + player.getUniqueId())) {
             String path = "player." + player.getUniqueId();
-            boolean warningsEnabled = playerDataConfig.getBoolean(path + ".warningsEnabled", DurabilityAlert.isEnableByDefault());
-            int armorThreshold = playerDataConfig.getInt(path + ".armorThreshold", DurabilityAlert.getDefaultValue());
-            int toolsThreshold = playerDataConfig.getInt(path + ".toolsThreshold", DurabilityAlert.getDefaultValue());
-            PlayerSettings.AlertType alertType = PlayerSettings.AlertType.valueOf(playerDataConfig.getString(path + ".alertType", DurabilityAlert.getDefaultType().name()));
-            boolean enchantedItemsOnly = playerDataConfig.getBoolean(path + ".enchantedItemsOnly", DurabilityAlert.isDefaultEnchanted());
+            boolean warningsEnabled = playerDataConfig.getBoolean(path + ".warningsEnabled", DurabilityAlertContinued.isEnableByDefault());
+            int armorThreshold = playerDataConfig.getInt(path + ".armorThreshold", DurabilityAlertContinued.getDefaultValue());
+            int toolsThreshold = playerDataConfig.getInt(path + ".toolsThreshold", DurabilityAlertContinued.getDefaultValue());
+            PlayerSettings.AlertType alertType = PlayerSettings.AlertType.valueOf(playerDataConfig.getString(path + ".alertType", DurabilityAlertContinued.getDefaultType().name()));
+            boolean enchantedItemsOnly = playerDataConfig.getBoolean(path + ".enchantedItemsOnly", DurabilityAlertContinued.isDefaultEnchanted());
             boolean soundEnabled = playerDataConfig.getBoolean(path + ".soundEnabled", true);
 
             // Create a new PlayerSettings object based on the loaded values
@@ -101,6 +101,11 @@ public class JoinListener implements Listener {
     }
 
     void playerSave(Player player) {
+        if (playerDataConfig == null) {
+            plugin.getLogger().severe("Player data configuration is null! Unable to save player data.");
+            return;
+        }
+
         PlayerSettings settings = main.getPlayerSettings(player); // Get the player settings object
 
         String path = "player." + player.getUniqueId();
@@ -112,12 +117,9 @@ public class JoinListener implements Listener {
         playerDataConfig.set(path + ".soundEnabled", settings.isSoundEnabled());
 
         try {
-            // Use try-with-resources to handle file saving more securely
-            File tempFile = new File(plugin.getDataFolder(), "PlayerData_temp.yml");
-            playerDataConfig.save(tempFile);
-            Files.move(tempFile.toPath(), playerData.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            playerDataConfig.save(playerData);
         } catch (IOException e) {
-            plugin.getLogger().severe(DurabilityAlert.prefix + ChatColor.RED + "Could not save player data.");
+            plugin.getLogger().severe(DurabilityAlertContinued.prefix + ChatColor.RED + "Could not save player data.");
             plugin.getLogger().log(Level.SEVERE, "Exception occurred while saving PlayerData.yml", e);
         }
     }

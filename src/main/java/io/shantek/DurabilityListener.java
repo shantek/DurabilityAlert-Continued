@@ -14,9 +14,9 @@ import java.util.Objects;
 
 public class DurabilityListener implements Listener {
 
-    private final DurabilityAlert main;
+    private final DurabilityAlertContinued main;
 
-    public DurabilityListener(DurabilityAlert plugin) {
+    public DurabilityListener(DurabilityAlertContinued plugin) {
         main = plugin;
     }
 
@@ -25,7 +25,7 @@ public class DurabilityListener implements Listener {
         ItemStack item = event.getItem();
         Player player = event.getPlayer();
 
-        if (!player.hasPermission("durabilityalert.alert")) {
+        if (!player.hasPermission("shantek.durabilityalert.alert")) {
             return;
         }
 
@@ -105,7 +105,7 @@ public class DurabilityListener implements Listener {
             playWarningSound(player, durability);
         }
         String title = ChatColor.RED + main.configHandler.lowDurability.replaceAll("%item%", item);
-        player.sendTitle(title, subtitle, 2, DurabilityAlert.getDisplayTime(), 2);
+        player.sendTitle(title, subtitle, 2, DurabilityAlertContinued.getDisplayTime(), 2);
     }
 
     private String buildSubtitle(int durability) {

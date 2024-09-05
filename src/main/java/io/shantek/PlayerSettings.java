@@ -11,11 +11,11 @@ public class PlayerSettings {
 
     // Default constructor
     public PlayerSettings() {
-        this.warningsEnabled = DurabilityAlert.isEnableByDefault();
-        this.armorThreshold = DurabilityAlert.getDefaultValue();
-        this.toolsThreshold = DurabilityAlert.getDefaultValue();
-        this.alertType = DurabilityAlert.getDefaultType();
-        this.enchantedItemsOnly = DurabilityAlert.isDefaultEnchanted();
+        this.warningsEnabled = DurabilityAlertContinued.isEnableByDefault();
+        this.armorThreshold = DurabilityAlertContinued.getDefaultValue();
+        this.toolsThreshold = DurabilityAlertContinued.getDefaultValue();
+        this.alertType = DurabilityAlertContinued.getDefaultType();
+        this.enchantedItemsOnly = DurabilityAlertContinued.isDefaultEnchanted();
         this.soundEnabled = true;
     }
 
@@ -87,7 +87,7 @@ public class PlayerSettings {
 
     // In PlayerSettings.java
 
-    public boolean getSetting(DurabilityAlert.Setting setting) {
+    public boolean getSetting(DurabilityAlertContinued.Setting setting) {
         switch (setting) {
             case WARNINGS_ENABLED:
                 return isWarningsEnabled();
