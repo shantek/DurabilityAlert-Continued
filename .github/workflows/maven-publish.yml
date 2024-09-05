@@ -88,8 +88,8 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./target/DurabilityAlert-${{ env.VERSION }}.jar
-          asset_name: DurabilityAlert-${{ env.VERSION }}.jar
+          asset_path: ./target/DurabilityAlert-Continued-${{ env.VERSION }}.jar
+          asset_name: DurabilityAlert-Continued-${{ env.VERSION }}.jar
           asset_content_type: application/java-archive
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
