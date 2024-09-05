@@ -36,7 +36,13 @@ Toggles the durability remaining to be either percentage or durability, per play
 **/durability enchant**<br />
 Toggles if alerts should only be shown for enchanted items
 
+**/durability sound**<br />
+Toggles durability alert sound on/off
+
 ## Permissions
 
-**durabilityalert.command:**<br />
-Default durability alert command to control Durability Alerts
+**shantek.durabilityalert.use:**<br />
+Allows the player to use and configure the durability alert plugin
+
+**shantek.durabilityalert.reload:**<br />
+Ability to reload the plugin config. Default for OP.
