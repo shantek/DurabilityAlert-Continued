@@ -1,5 +1,6 @@
 package io.shantek;
 
+import io.shantek.functions.Metrics;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.util.HashMap;
@@ -10,6 +11,8 @@ import java.util.UUID;
 public final class DurabilityAlertContinued extends JavaPlugin {
 
     private static DurabilityAlertContinued plugin;
+
+    public Metrics metrics;
 
     // Default settings
     private static boolean enableByDefault;
@@ -58,6 +61,9 @@ public final class DurabilityAlertContinued extends JavaPlugin {
 
         // Perform any additional setup when the server starts
         joinListener.onServerStart();
+
+        int pluginId = 23275;
+        Metrics metrics = new Metrics(this, pluginId);
     }
 
     @Override
