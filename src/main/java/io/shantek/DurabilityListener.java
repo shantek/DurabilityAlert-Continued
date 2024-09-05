@@ -57,7 +57,7 @@ public class DurabilityListener implements Listener {
 
         if (shouldAlert) {
             String itemName = getFormattedItemName(type, item);
-            sendWarning(player, itemName, durabilityLeft, settings.isSoundEnabled());
+            sendWarning(player, itemName, durabilityLeft - 1, settings.isSoundEnabled()); // Subtract here for display only
         }
     }
 
