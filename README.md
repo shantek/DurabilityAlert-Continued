@@ -5,8 +5,6 @@
 
 # Durability Alert - Continued
 
-This plugin is the continued development of the original [Durability Alert plugin](https://github.com/christopherwalkerml/DurabilityAlert), done so with permission from the original author.
-
 Alerts the user of low durability items. Percent and toggle defined by user.
 
 ### What is Durability Alert?
@@ -46,3 +44,17 @@ Allows the player to use and configure the durability alert plugin
 
 **shantek.durabilityalert.reload:**<br />
 Ability to reload the plugin config. Default for OP.
+
+<img src="https://bstats.org/signatures/bukkit/Durability%20Alert%20Continued.svg" alt="Plugin Statistics">
+
+## External Links
+
+[Support via Patreon](https://shantek.co/patreon)
+
+[Discord](https://shantek.co/discord)
+
+[Report bugs/make suggestions](https://github.com/shantek/DurabilityAlert-Continued/issues)
+
+### License
+This plugin is the continued development of the original [Durability Alert plugin](https://github.com/christopherwalkerml/DurabilityAlert), done so with permission from the original author.
+ Distributed under the GNU General Public License v3.0.
