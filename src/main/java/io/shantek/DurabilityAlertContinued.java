@@ -39,7 +39,7 @@ public final class DurabilityAlertContinued extends JavaPlugin {
         saveDefaultConfig();
 
         enableByDefault = getConfig().getBoolean("enabled-by-default", false);
-        defaultValue = getConfig().getInt("defaultvalue", 10);
+        defaultValue = getConfig().getInt("defaultvalue", 20);
         defaultType = PlayerSettings.AlertType.valueOf(getConfig().getString("defaulttype", "PERCENT").toUpperCase());
         defaultEnchanted = getConfig().getBoolean("defaultenchanted", false);
         displayTime = getConfig().getInt("displaytime", 10); // Set default if not in config

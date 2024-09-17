@@ -25,7 +25,7 @@ prefix: "&f&l[&9&lDurabilityAlert&f&l] "
 displaytime: 10
 
 # Default value to use for players
-defaultvalue: 10
+defaultvalue: 20
 
 # Durability measurement to use for the plugin
 # Can be 'percent' or 'durability'
