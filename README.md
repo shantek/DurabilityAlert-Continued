@@ -1,5 +1,7 @@
 [![License: GPL](https://img.shields.io/badge/license-GPL-blue.svg)](LICENSE) [![Discord](https://img.shields.io/discord/628396916639793152.svg?color=%237289da&label=discord)](https://shantek.co/discord)
 
+<img src="https://www.shantek.io/wp-content/uploads/2024/09/Banner-DA.png" alt="Durability Alert Plugin" />
+
 #### Looking for the latest dev builds? You can find them [here!](https://shantek.dev/job/DurabilityAlert-Continued/)
 
 
