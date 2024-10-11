@@ -50,6 +50,16 @@ public class DurabilityListener implements Listener {
         }
 
         int threshold = isArmor ? settings.getArmorThreshold() : settings.getToolsThreshold();
+
+        // Temp hard code the threshold to 10 left when the item is a brush
+        if (type.contains("brush")) {
+            if (settings.getAlertType() == PlayerSettings.AlertType.PERCENT) {
+                threshold = 16;
+            } else {
+                threshold = 11;
+            }
+        }
+
         int durabilityLeft = calculateDurabilityLeft(item);
         float percentLeft = calculateDurabilityPercent(item);
 
@@ -88,7 +98,7 @@ public class DurabilityListener implements Listener {
     private boolean isTool(String type) {
         return type.contains("pickaxe") || type.contains("axe") || type.contains("shovel")
                 || type.contains("sword") || type.contains("hoe") || type.contains("fishing")
-                || type.contains("shears") || type.contains("shield");
+                || type.contains("shears") || type.contains("shield") || type.contains("brush");
     }
 
     private String getFormattedItemName(String type, ItemStack item) {
