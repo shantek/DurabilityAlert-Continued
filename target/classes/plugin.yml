@@ -1,5 +1,5 @@
 name: DurabilityAlertReloaded
-version: '${project.version}'
+version: 1.6.1
 main: io.shantek.DurabilityAlertContinued
 api-version: 1.13
 
