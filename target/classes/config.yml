@@ -1,0 +1,43 @@
+# Title message shown when the item is low on durability
+# %item% will be replaced with the item name
+lowdurability: "Durability Warning"
+
+# Subtitle shown when the item is low on durability
+# %durability% is replaced with the remaining durability number
+durabilityleft: "%durability% Remaining"
+
+# Plugin language/messages
+warningsdisabled: "Durability Warnings Disabled!"
+warningsenabled: "Durability Warnings Enabled!"
+enchantedtrue: "Alerts will only show for enchanted items"
+enchantedfalse: "Alerts will show for all items"
+invalidarguments: "Invalid Arguments"
+armourset: "Armour warning value set to %armour%"
+toolset: "Tool warning value set to %tool%"
+mustbenumber: "Percent must be a number! ex: 10"
+settype: "Warning type has been set to %type%"
+soundenabled: "Durability alert sound enabled."
+sounddisabled: "Durability alert sound disabled."
+
+prefix: "&f&l[&9&lDurabilityAlert&f&l] "
+
+# The amount of time the durability alert will remain on screen
+displaytime: 10
+
+# Default value to use for players
+defaultvalue: 20
+
+# Durability measurement to use for the plugin
+# Can be 'percent' or 'durability'
+defaulttype: "percent"
+
+# Default setting for new players for alerting on enchanted items only
+# Can be 'true' or 'false'
+defaultenchanted: false
+
+# Should Durability Alert be enabled for players by default?
+# Can be 'true' or 'false'
+enabled-by-default: false
+
+# Sound volume (1.0 is default, 0.0 is mute, and can go up to 2.0)
+soundvolume: 1.0
