@@ -10,7 +10,7 @@
 **A lightweight alert system for item durability in Minecraft.**  
 Receive notifications when your armor or tools are low on durability. Configurable on a per-player basis, with full control over thresholds and sound cues.
 
-> 🔧 [Get the latest dev builds here →](https://shantek.dev/job/DurabilityAlert-Continued/)
+> 🔧 [Get the latest dev builds here →](https://www.github.com/shantek/DurabilityAlert-Continued/releases)
 
 ---
 
