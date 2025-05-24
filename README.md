@@ -1,62 +1,77 @@
-[![License: GPL](https://img.shields.io/badge/license-GPL-blue.svg)](LICENSE) [![Discord](https://img.shields.io/discord/628396916639793152.svg?color=%237289da&label=discord)](https://shantek.co/discord) [![CodeFactor](https://www.codefactor.io/repository/github/shantek/durabilityalert-continued/badge)](https://www.codefactor.io/repository/github/shantek/durabilityalert-continued)
+[![License: GPL](https://img.shields.io/badge/license-GPL-blue.svg)](LICENSE)
+[![Discord](https://img.shields.io/discord/628396916639793152.svg?color=%237289da&label=discord)](https://shantek.co/discord)
+[![CodeFactor](https://www.codefactor.io/repository/github/shantek/durabilityalert-continued/badge)](https://www.codefactor.io/repository/github/shantek/durabilityalert-continued)
+![Plugin Stats](https://bstats.org/signatures/bukkit/Durability%20Alert%20Continued.svg)
 
-<img src="https://www.shantek.io/wp-content/uploads/2024/09/Banner-DA.png" alt="Durability Alert Plugin" />
+<img src="https://www.shantek.io/wp-content/uploads/2024/09/Banner-DA.png" alt="Durability Alert Plugin Banner" />
 
-#### Looking for the latest dev builds? You can find them [here!](https://shantek.dev/job/DurabilityAlert-Continued/)
+# 🛡️ Durability Alert – Continued
 
+**A lightweight alert system for item durability in Minecraft.**  
+Receive notifications when your armor or tools are low on durability. Configurable on a per-player basis, with full control over thresholds and sound cues.
 
-# Durability Alert - Continued
+> 🔧 [Get the latest dev builds here →](https://shantek.dev/job/DurabilityAlert-Continued/)
 
-Alerts the user of low durability items. Percent and toggle defined by user.
+---
 
-### What is Durability Alert?
-Durability Alert is a plugin that notifies the player when their items are low on durability.
-Works for: All armour, Pickaxes, Axes, Shovels, Swords, Hoes, Fishing Rod, Shears.
+## 🔍 Features
 
-## Commands
+- Alerts players when armor/tools drop below a set durability
+- Works with percentage or raw durability mode
+- Supports: Armor, Tools, Swords, Hoes, Fishing Rods, Shears
+- Fully configurable thresholds per player
+- Toggle sound alerts
+- Supports per-player settings and toggles
 
-Players on the server are able to toggle and adjust their own durability alerts to suit their own needs as follows:
+---
 
-**/durabilityalert (/da)**<br />
-The base command and short command/alias.
+## ⚙️ Commands
 
-**/durabilityalert toggle**<br />
-Toggles the Durability Alert, per player
+| Command | Description |
+|---------|-------------|
+| `/durabilityalert` or `/da` | Base command; opens info or help. |
+| `/da toggle` | Enables/disables durability alerts for the player. |
+| `/da armour <value>` | Set the alert threshold for armor (per player). |
+| `/da tools <value>` | Set the alert threshold for tools (per player). |
+| `/da type [percent/durability]` | Choose between % or raw durability display. |
+| `/da enchant` | Toggle alerts only for enchanted gear. |
+| `/da sound` | Toggle alert sounds on or off. |
 
-**/durabilityalert armour <number>**<br />
-Changes the threshold for the Durability Alert notification for armour, per player.
+---
 
-**/durabilityalert tools <number>**<br />
-Changes the threshold for the Durability Alert notification for tools, per player.
+## 🔐 Permissions
 
+| Node | Description |
+|------|-------------|
+| `shantek.durabilityalert.use` | Allows a player to use and configure alerts. |
+| `shantek.durabilityalert.reload` | Allows plugin config to be reloaded (default: OP only). |
 
-**/durabilityalert type [percent/durability]**<br /> 
-Toggles the durability remaining to be either percentage or durability, per player.
+---
 
-**/durability enchant**<br />
-Toggles if alerts should only be shown for enchanted items
+## 🛠️ Setup Instructions
 
-**/durability sound**<br />
-Toggles durability alert sound on/off
+1. Drop the plugin JAR into your `/plugins` folder.
+2. Restart or reload the server.
+3. Players can immediately begin customizing their alerts using `/da`.
 
-## Permissions
+> Alerts are stored per-player and persist between sessions.
 
-**shantek.durabilityalert.use:**<br />
-Allows the player to use and configure the durability alert plugin
+---
 
-**shantek.durabilityalert.reload:**<br />
-Ability to reload the plugin config. Default for OP.
+## 💬 External Links
 
-<img src="https://bstats.org/signatures/bukkit/Durability%20Alert%20Continued.svg" alt="Plugin Statistics">
+- 💬 [Join the Discord](https://shantek.co/discord)
+- 🛠️ [GitHub Repository](https://github.com/shantek/DurabilityAlert-Continued)
+- 🐞 [Report Issues / Suggest Features](https://github.com/shantek/DurabilityAlert-Continued/issues)
+- ❤️ [Support via Patreon](https://shantek.co/patreon)
 
-## External Links
+---
 
-[Support via Patreon](https://shantek.co/patreon)
+## 📄 License
 
-[Discord](https://shantek.co/discord)
+This is a continued and improved version of the original  
+[Durability Alert plugin by christopherwalkerml](https://github.com/christopherwalkerml/DurabilityAlert),  
+developed and maintained with permission from the original author.
 
-[Report bugs/make suggestions](https://github.com/shantek/DurabilityAlert-Continued/issues)
-
-### License
-This plugin is the continued development of the original [Durability Alert plugin](https://github.com/christopherwalkerml/DurabilityAlert), done so with permission from the original author.
- Distributed under the GNU General Public License v3.0.
+Distributed under the **GNU General Public License v3.0**.  
+See [`LICENSE`](LICENSE) for full terms.
