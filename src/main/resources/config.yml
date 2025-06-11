@@ -19,10 +19,10 @@ settype: "Warning type has been set to %type%"
 soundenabled: "Durability alert sound enabled."
 sounddisabled: "Durability alert sound disabled."
 
-prefix: "&f&l[&9&lDurabilityAlert&f&l] "
+prefix: "&f&l[&3&lDurability&bAlert&f&l] "
 
 # The amount of time the durability alert will remain on screen
-displaytime: 10
+displaytime: 8
 
 # Default value to use for players
 defaultvalue: 15
@@ -40,4 +40,4 @@ defaultenchanted: false
 enabled-by-default: false
 
 # Sound volume (1.0 is default, 0.0 is mute, and can go up to 2.0)
-soundvolume: 1.0
+soundvolume: 0.7
