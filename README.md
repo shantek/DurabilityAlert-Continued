@@ -7,8 +7,7 @@
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/shantek/DurabilityAlert-Continued)
 ![GitHub Created At](https://img.shields.io/github/created-at/shantek/DurabilityAlert-Continued)
 
-
-<img src="./github/assets/DA_Banner.png" alt="Durability Alert Plugin Banner" />
+# ![Durability Alert Banner](/.github/assets/DA_Banner.png)
 
 # 🛡️ Durability Alert – Continued
 
