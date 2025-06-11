@@ -27,29 +27,34 @@ public class ConfigHandler {
         loadConfig();
     }
 
+    // Helper to parse color codes
+    private String parse(String text) {
+        return ChatColor.translateAlternateColorCodes('&', text);
+    }
+
     public void loadConfig() {
         FileConfiguration config = plugin.getConfig();
 
         // Load and translate the prefix to Minecraft color codes
-        prefix = ChatColor.translateAlternateColorCodes('&', config.getString("prefix", "&f&l[&9&lDurabilityAlert&f&l] ")) + ChatColor.RESET;
+        prefix = parse(config.getString("prefix", "&f&l[&3Durability&bAlert&f&l] ")) + ChatColor.RESET;
 
+        // Load messages with defaults and parse colors
+        invalidArguments = parse(config.getString("invalidarguments", "Invalid arguments"));
+        warningsEnabled = parse(config.getString("warningsenabled", "Durability warnings are now &2enabled"));
+        warningsDisabled = parse(config.getString("warningsdisabled", "Durability warnings are now &cdisabled"));
+        enchantedTrue = parse(config.getString("enchantedtrue", "Alerts will only show for enchanted items"));
+        enchantedFalse = parse(config.getString("enchantedfalse", "Alerts will show for all items"));
+        setType = parse(config.getString("settype", "Warning type has been set to %type%"));
+        armourSet = parse(config.getString("armourset", "Armor warning value set to %armour%"));
+        toolSet = parse(config.getString("toolset", "Tools warning value set to %tool%"));
+        mustBeNumber = parse(config.getString("mustbenumber", "Percent must be a number! ex: 10"));
+        lowDurability = parse(config.getString("lowdurability", "Durability Warning"));
+        durabilityLeft = parse(config.getString("durabilityleft", "%durability% Remaining"));
+        soundEnabled = parse(config.getString("soundenabled", "Alert sounds are now &2enabled"));
+        soundDisabled = parse(config.getString("sounddisabled", "Alert sounds are now &cdisabled"));
 
-        // Load messages with defaults
-        invalidArguments = config.getString("invalidarguments", "Invalid Arguments");
-        warningsEnabled = config.getString("warningsenabled", "Warnings enabled.");
-        warningsDisabled = config.getString("warningsdisabled", "Warnings disabled.");
-        enchantedTrue = config.getString("enchantedtrue", "Alerts will only show for enchanted items.");
-        enchantedFalse = config.getString("enchantedfalse", "Alerts will show for all items.");
-        setType = config.getString("settype", "Warning type has been set to %type%.");
-        armourSet = config.getString("armourset", "Armor warning value set to %armour%.");
-        toolSet = config.getString("toolset", "Tools warning value set to %tool%.");
-        mustBeNumber = config.getString("mustbenumber", "Percent must be a number! ex: 10");
-        lowDurability = config.getString("lowdurability", "Durability Warning");
-        durabilityLeft = config.getString("durabilityleft", "%durability% Remaining");
-        soundEnabled = config.getString("soundenabled", "Durability alert sound enabled.");
-        soundDisabled = config.getString("sounddisabled", "Durability alert sound disabled.");
 
         // Load the volume setting with default 1.0
-        soundVolume = (float) config.getDouble("soundvolume", 1.0);
+        soundVolume = (float) config.getDouble("soundvolume", 0.7);
     }
 }

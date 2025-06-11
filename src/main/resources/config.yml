@@ -7,19 +7,19 @@ lowdurability: "Durability Warning"
 durabilityleft: "%durability% Remaining"
 
 # Plugin language/messages
-warningsdisabled: "Durability Warnings Disabled!"
-warningsenabled: "Durability Warnings Enabled!"
+warningsdisabled: "Durability warnings are now &cdisabled"
+warningsenabled: "Durability warnings are now &2enabled"
 enchantedtrue: "Alerts will only show for enchanted items"
 enchantedfalse: "Alerts will show for all items"
-invalidarguments: "Invalid Arguments"
+invalidarguments: "Invalid arguments"
 armourset: "Armour warning value set to %armour%"
 toolset: "Tool warning value set to %tool%"
 mustbenumber: "Percent must be a number! ex: 10"
 settype: "Warning type has been set to %type%"
-soundenabled: "Durability alert sound enabled."
-sounddisabled: "Durability alert sound disabled."
+soundenabled: "Alert sounds are now &2enabled"
+sounddisabled: "Alert sounds are now &cdisabled"
 
-prefix: "&f&l[&3&lDurability&bAlert&f&l] "
+prefix: "&f&l[&3Durability&bAlert&f&l] "
 
 # The amount of time the durability alert will remain on screen
 displaytime: 8
