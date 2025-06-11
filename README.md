@@ -1,6 +1,11 @@
-[![License: GPL](https://img.shields.io/badge/license-GPL-blue.svg)](LICENSE)
+# ![Shantek Banner](/.github/assets/Banner.png)
+
+---
+[![Modrinth](https://img.shields.io/badge/Modrinth-Download-green?logo=modrinth)](https://modrinth.com/plugin/durability-alert-continued)
 [![Discord](https://img.shields.io/discord/628396916639793152.svg?color=%237289da&label=discord)](https://shantek.co/discord)
 [![CodeFactor](https://www.codefactor.io/repository/github/shantek/durabilityalert-continued/badge)](https://www.codefactor.io/repository/github/shantek/durabilityalert-continued)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/shantek/DurabilityAlert-Continued)
+![GitHub Created At](https://img.shields.io/github/created-at/shantek/DurabilityAlert-Continued)
 
 
 <img src="https://www.shantek.io/wp-content/uploads/2024/09/Banner-DA.png" alt="Durability Alert Plugin Banner" />
@@ -69,9 +74,12 @@ Receive notifications when your armor or tools are low on durability. Configurab
 
 ## 📄 License
 
+[![License: GPL](https://img.shields.io/badge/license-GPL-blue.svg)](LICENSE)
+
 This is a continued and improved version of the original  
 [Durability Alert plugin by christopherwalkerml](https://github.com/christopherwalkerml/DurabilityAlert),  
 developed and maintained with permission from the original author.
+
 
 Distributed under the **GNU General Public License v3.0**.  
 See [`LICENSE`](LICENSE) for full terms.
