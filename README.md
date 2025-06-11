@@ -8,7 +8,7 @@
 ![GitHub Created At](https://img.shields.io/github/created-at/shantek/DurabilityAlert-Continued)
 
 
-<img src="https://www.shantek.io/wp-content/uploads/2024/09/Banner-DA.png" alt="Durability Alert Plugin Banner" />
+<img src="./github/assets/DA_Banner.png" alt="Durability Alert Plugin Banner" />
 
 # 🛡️ Durability Alert – Continued
 
