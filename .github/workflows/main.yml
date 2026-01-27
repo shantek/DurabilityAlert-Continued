@@ -92,6 +92,9 @@ jobs:
             **Build Number:** ${{ env.BUILD_NUMBER }}
             **File:** `DurabilityAlert-build-${{ env.BUILD_NUMBER }}.jar`
             
+            **Changelog:**
+            ${{ env.CHANGELOG }}
+            
             ✅ Build completed successfully! Download the .jar file attached.
           embed-color: 3066993
           embed-thumbnail-url: https://cdn.modrinth.com/data/BgYvyTuF/42db615c53882f97937fafaedcdba747ac8ea4e9_96.webp
