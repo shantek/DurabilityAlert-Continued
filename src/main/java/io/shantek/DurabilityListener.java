@@ -96,7 +96,7 @@ public class DurabilityListener implements Listener {
     }
 
     private boolean isTool(String type) {
-        return type.contains("pickaxe") || type.contains("axe") || type.contains("shovel")
+        return type.contains("spear") || type.contains("pickaxe") || type.contains("axe") || type.contains("shovel")
                 || type.contains("sword") || type.contains("hoe") || type.contains("fishing")
                 || type.contains("shears") || type.contains("shield") || type.contains("brush") || type.contains("bow");
     }
