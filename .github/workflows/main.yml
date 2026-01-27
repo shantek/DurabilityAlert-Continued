@@ -114,6 +114,23 @@ jobs:
                -X POST \
                -d "$JSON_PAYLOAD" \
                ${{ secrets.DISCORD_WEBHOOK_URL }}
+
       - name: Trigger WordPress GitHub Releases Sync
         run: |
-          curl -s -o /dev/null -w "%{http_code}" "${{ secrets.WORDPRESS_SYNC_URL }}"      
+          curl -s -o /dev/null -w "%{http_code}" "${{ secrets.WORDPRESS_SYNC_URL }}"
+
+      - name: Upload .jar directly to Discord
+        uses: tsickert/discord-webhook@v5.3.0
+        with:
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          filename: ./target/DurabilityAlert-build-${{ env.BUILD_NUMBER }}.jar
+          embed-title: "📦 DurabilityAlert - Build #${{ env.BUILD_NUMBER }}"
+          embed-description: |
+            **Plugin:** DurabilityAlert
+            **Build Number:** ${{ env.BUILD_NUMBER }}
+            **File:** `DurabilityAlert-build-${{ env.BUILD_NUMBER }}.jar`
+            
+            ✅ Build completed successfully! Download the .jar file attached below.
+          embed-color: 3066993
+          embed-thumbnail-url: https://cdn.modrinth.com/data/BgYvyTuF/42db615c53882f97937fafaedcdba747ac8ea4e9_96.webp
+          embed-footer-text: "DurabilityAlert • Direct File Upload"
